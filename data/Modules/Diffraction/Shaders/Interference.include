@@ -1,0 +1,5 @@
+float interference(float x, float slitsSpacing, float slitsCount, float waveLength, float screenDistance)
+{
+	float C = 3.1416 * slitsSpacing * 10.0 / (waveLength * screenDistance);
+	return pow(sin(slitsCount * C * x) / (slitsCount * sin(C * x)), 2.0);
+}

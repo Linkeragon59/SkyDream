@@ -1,0 +1,18 @@
+{
+  "TangiblePresets": [
+    {"Name": "Laser", "Radius": 50.0, "Angle": 80.0},
+    {"Name": "Slit", "Radius": 50.0, "Angle": 90.0},
+    {"Name": "Slits", "Radius": 50.0, "Angle": 100.0},
+    {"Name": "SquareHole", "Radius": 50.0, "Angle": 110.0},
+    {"Name": "RoundHole", "Radius": 50.0, "Angle": 120.0},
+    {"Name": "Laser", "Radius": 133.0, "Angle": 160.0},
+    {"Name": "RoundHoles", "Radius": 120.0, "Angle": 90.0},
+    {"Name": "Slits", "Radius": 130.0, "Angle": 137.0},
+    {"Name": "SquareHole", "Radius": 130.0, "Angle": 221.0}
+  ],
+  "TangibleZones": [
+    {"Name": "Laser", "Left": 0.0, "Right": 0.4, "Top": 0.4, "Bottom": 0.6},
+    {"Name": "Object", "Left": 0.4, "Right": 0.8, "Top": 0.4, "Bottom": 0.6},
+    {"Name": "Curve", "Left": 0.8, "Right": 1.0, "Top": 0.0, "Bottom": 1.0}
+  ]
+}

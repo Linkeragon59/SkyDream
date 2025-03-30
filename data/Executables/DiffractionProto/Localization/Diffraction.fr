@@ -1,0 +1,150 @@
+#ToolsMenu
+Outils
+
+#DisplaysSetupWindow
+Configuration des écrans
+#WindowFullscreenSection
+Fenêtres plein écran
+#ExitFullscreen
+Sortir du plein écran
+#EnterFullscreen
+Entrer en plein écran
+#MonitorsPhysicalSizeSection
+Tailles physiques des écrans
+#MonitorPhysicalWidth
+Largeur
+#MonitorPhysicalHeight
+Hauteur
+#MainMonitor
+Moniteur Principal
+#SecondaryMonitor
+Moniteur Secondaire
+
+#MainWindowTitle
+Prototype de diffraction - Principale
+#SecondaryWindowTitle
+Prototype de diffraction - Secondaire
+
+#Laser
+Laser
+#Slit
+Fente
+#Slits
+Fentes
+#SquareHole
+Trou carré
+#RoundHole
+Trou rond
+#RoundHoles
+Trous ronds
+
+#TangiblesInfoWindow
+Info des tangibles
+#TangiblesPresets
+presets
+#AddFake
+Ajouter
+#TangiblesDetected
+tangibles détectés
+#TangiblePosition
+Position
+#TangibleOrientation
+Orientation
+#TangibleScore
+Score
+#TangibleRadius
+Rayon
+#TangibleAngle
+Angle
+#TangiblePreset
+Preset
+#FakeTangibles
+tangibles
+#TangibleXPos
+Position X
+#TangibleYPos
+Position Y
+#RemoveTangible
+Retirer
+#CustomizeTolerances
+Editer les tolérances
+#RadiusVariance
+Variance du rayon
+#AngleVariance
+Variance de l'angle
+#ScoreThreshold
+Seuil de score
+#DisplayMatchingPresets
+Display potential presets matching current touches
+Afficher les presets correspondants aux points de contact actuels
+#CurrentlyNotDetecting3Touches
+3 points de contact ne sont pas détectés pour le moment
+
+#MainScreenTitle
+Expériences de diffraction / interférences
+
+#ShowGrid
+Afficher la grille
+
+#ExperimentSettings
+Paramètres de l'expérience
+#LightAttenuation
+Attenuation de la lumière
+#ShowResultCurve
+Afficher la courbe du résultat
+#CurveResolution
+Résolution des courbes
+#ShowRawDiffraction
+Afficher la courbe de diffraction
+#ShowRawInterferences
+Afficher la courbe d'interférences
+#ShowOPD
+Afficher la différence de marche
+#AnimateOPD
+Animer la visualisation de la différence de marche
+#ShowOPDZoom
+Afficher le zoom de la différence de marche
+#OPDRaysResolution
+Résolution des rayons pour la différence de marche
+#DiffractionOPDRaysCount
+Nombre de rayons pour la différence de marche
+
+#PleasePutALaser
+Merci de positionner un laser dans cette zone
+#PleaseOrientateTheLaser
+Merci d'orienter le laser selon l'axe optique
+#PleasePutAnObject
+Merci de positionner un objet dans cette zone
+
+#WaveLength
+Longueur d'onde
+#Luminosity
+Luminosité
+
+#ScreenDistance
+Distance à l'écran
+
+#SlitWidth
+Largeur de la fente
+
+#SlitsCount
+Nombre de fentes
+#SlitsWidth
+Largeur des fentes
+#SlitsSpacing
+Espacement des fentes
+
+#HoleWidth
+Largeur du trou
+#HoleHeight
+Hauteur du trou
+
+#HoleDiameter
+Diamètre du trou
+
+#HolesCount
+Nombre de trous
+#HolesDiameter
+Diamètre des trous
+#HolesSpacing
+Espacement des trous

@@ -49,5 +49,7 @@ target_include_directories(Core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/public)
 target_include_directories(Core PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/private)
 
 target_link_libraries(Core PUBLIC GLM)
+target_link_libraries(Core PUBLIC fmtInclude)
+target_link_libraries(Core PUBLIC fmtLib)
 
 target_link_libraries(Core PRIVATE GLFW)

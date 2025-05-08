@@ -8,6 +8,8 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 add_compile_options(/W4 /WX)
 # support Hot Reload
 add_compile_options(/ZI)
+# utf8 support compile side (necessary for fmt lib to support utf8)
+add_compile_options(/utf-8)
 
 add_subdirectory(code/Extern)
 add_subdirectory(code/Frameworks)

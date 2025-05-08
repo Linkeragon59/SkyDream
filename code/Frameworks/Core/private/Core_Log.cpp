@@ -4,6 +4,8 @@
 #include <cstdarg>
 #include <iostream>
 
+// TODO : Use fmt and stdlog libraries
+
 void LogMsg(const char* aFile, int aLine, const char* aMsgFormat, ...)
 {
 	std::string message;

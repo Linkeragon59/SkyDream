@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 
 # Interface Libraries
 
+add_subdirectory(fmt)
 add_subdirectory(rapidjson)
 add_subdirectory(tinygltf)
 add_subdirectory(VulkanSDK)

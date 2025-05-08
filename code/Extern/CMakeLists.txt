@@ -4,6 +4,7 @@ cmake_minimum_required(VERSION 3.16)
 
 add_subdirectory(fmt)
 add_subdirectory(rapidjson)
+add_subdirectory(spdlog)
 add_subdirectory(tinygltf)
 add_subdirectory(VulkanSDK)
 

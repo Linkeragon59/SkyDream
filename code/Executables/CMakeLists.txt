@@ -17,3 +17,6 @@ set_target_properties(NeatDoublePoleBalancing PROPERTIES FOLDER "Executables")
 
 add_subdirectory(NeatXOR)
 set_target_properties(NeatXOR PROPERTIES FOLDER "Executables")
+
+add_subdirectory(TextToSpeechTest)
+set_target_properties(TextToSpeechTest PROPERTIES FOLDER "Executables")

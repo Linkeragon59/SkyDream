@@ -1,0 +1,5 @@
+# Tmp zip folder
+/tmp/
+
+# OnnxRuntime include and libs
+/onnxruntime-*/

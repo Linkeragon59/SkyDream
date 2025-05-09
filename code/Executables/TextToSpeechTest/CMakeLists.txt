@@ -18,8 +18,3 @@ target_link_libraries(TextToSpeechTest PRIVATE Piper)
 target_link_libraries(TextToSpeechTest PRIVATE OnnxRuntimeLib)
 
 set_property(TARGET TextToSpeechTest PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/data")
-
-install(
-  DIRECTORY ../../Extern/piper/espeak-ng/share/espeak-ng-data
-  DESTINATION ${CMAKE_BINARY_DIR}
-)

@@ -4,7 +4,7 @@ set CODE_PATH=%~dp0..\code
 set GLSLC_EXE=%CODE_PATH%\Extern\VulkanSDK\1.3.275.0\bin\win64\glslc.exe
 
 set DATA_PATH=%~dp0..\data
-set SHADERS_PATH=%DATA_PATH%\%1
+set SHADERS_PATH=%DATA_PATH%\Frameworks\Shaders
 
 echo Compiling Shaders in path : %SHADERS_PATH%
 

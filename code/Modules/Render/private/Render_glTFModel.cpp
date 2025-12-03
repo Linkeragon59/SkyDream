@@ -1,5 +1,7 @@
 #include "Render_glTFModel.h"
 
+#include "Core_FileHelpers.h"
+
 namespace Render
 {
 	void glTFMesh::Load(const tinygltf::Model& aModel, uint aMeshIndex, std::vector<Vertex>& someOutVertices, std::vector<uint>& someOutIndices)
@@ -666,7 +668,7 @@ namespace Render
 		tinygltf::TinyGLTF gltfContext;
 		tinygltf::Model gltfModel;
 		std::string error, warning;
-		if (!gltfContext.LoadASCIIFromFile(&gltfModel, &error, &warning, aFilename))
+		if (!gltfContext.LoadASCIIFromFile(&gltfModel, &error, &warning, FileHelpers::RedirectFilePath(aFilename.c_str())))
 		{
 			// TODO: Display the error message
 			return false;

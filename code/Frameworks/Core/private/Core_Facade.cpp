@@ -1,5 +1,6 @@
 #include "Core_Facade.h"
 
+#include "Core_FileHelpers.h"
 #include "Core_ModuleManager.h"
 #include "Core_TimeModule.h"
 #include "Core_WindowModule.h"
@@ -57,10 +58,12 @@ namespace Core
 		WindowModule::Register();
 		InputModule::Register();
 		EntityModule::Register();
+		FilesRedirectionModule::Register();
 	}
 
 	void Facade::Finalize()
 	{
+		FilesRedirectionModule::Unregister();
 		EntityModule::Unregister();
 		InputModule::Unregister();
 		WindowModule::Unregister();

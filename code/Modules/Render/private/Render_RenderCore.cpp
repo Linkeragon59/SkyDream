@@ -21,6 +21,7 @@
 #include "GLFW/glfw3.h"
 
 #include "Core_WindowModule.h"
+#include "Core_FileHelpers.h"
 #include "imgui.h"
 #include "stb_image.h"
 
@@ -352,7 +353,7 @@ namespace Render
 	void RenderCore::LoadUserTexture(const char* aTexturePath, const VkDescriptorImageInfo*& anOutDescriptor, uint& anOutWidth, uint& anOutHeight)
 	{
 		int texWidth, texHeight, texChannels;
-		stbi_uc* pixels = stbi_load(aTexturePath, &texWidth, &texHeight, &texChannels, STBI_rgb_alpha);
+		stbi_uc* pixels = stbi_load(FileHelpers::RedirectFilePath(aTexturePath).c_str(), &texWidth, &texHeight, &texChannels, STBI_rgb_alpha);
 		Assert(pixels, "Failed to load an image!");
 
 		VkDeviceSize textureSize = static_cast<VkDeviceSize>(texWidth) * static_cast<VkDeviceSize>(texHeight) * 4;

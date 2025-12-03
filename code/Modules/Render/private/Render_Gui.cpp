@@ -5,6 +5,7 @@
 #include "Core_InputModule.h"
 #include "Core_WindowModule.h"
 #include "Core_TimeModule.h"
+#include "Core_FileHelpers.h"
 
 #include "GLFW/glfw3.h"
 #include "stb_image.h"
@@ -453,11 +454,11 @@ namespace Render
 		unsigned char* fontData;
 		int texWidth, texHeight;
 		myFontMap.Clear();
-		myFontMap.SetFont(FontType::Regular, io.Fonts->AddFontFromFileTTF("Frameworks/Fonts/NotoSans-Regular.ttf", 16.f * myContentScaleY));
-		myFontMap.SetFont(FontType::Bold, io.Fonts->AddFontFromFileTTF("Frameworks/Fonts/NotoSans-Bold.ttf", 16.f * myContentScaleY));
-		myFontMap.SetFont(FontType::Italic, io.Fonts->AddFontFromFileTTF("Frameworks/Fonts/NotoSans-Italic.ttf", 16.f * myContentScaleY));
-		myFontMap.SetFont(FontType::Large, io.Fonts->AddFontFromFileTTF("Frameworks/Fonts/NotoSans-Regular.ttf", 32.f * myContentScaleY));
-		myFontMap.SetFont(FontType::Title, io.Fonts->AddFontFromFileTTF("Frameworks/Fonts/NotoSans-Bold.ttf", 32.f * myContentScaleY));
+		myFontMap.SetFont(FontType::Regular, io.Fonts->AddFontFromFileTTF(FileHelpers::RedirectFilePath("Frameworks/Fonts/NotoSans-Regular.ttf").c_str(), 16.f * myContentScaleY));
+		myFontMap.SetFont(FontType::Bold, io.Fonts->AddFontFromFileTTF(FileHelpers::RedirectFilePath("Frameworks/Fonts/NotoSans-Bold.ttf").c_str(), 16.f * myContentScaleY));
+		myFontMap.SetFont(FontType::Italic, io.Fonts->AddFontFromFileTTF(FileHelpers::RedirectFilePath("Frameworks/Fonts/NotoSans-Italic.ttf").c_str(), 16.f * myContentScaleY));
+		myFontMap.SetFont(FontType::Large, io.Fonts->AddFontFromFileTTF(FileHelpers::RedirectFilePath("Frameworks/Fonts/NotoSans-Regular.ttf").c_str(), 32.f * myContentScaleY));
+		myFontMap.SetFont(FontType::Title, io.Fonts->AddFontFromFileTTF(FileHelpers::RedirectFilePath("Frameworks/Fonts/NotoSans-Bold.ttf").c_str(), 32.f * myContentScaleY));
 
 		io.Fonts->GetTexDataAsRGBA32(&fontData, &texWidth, &texHeight);
 

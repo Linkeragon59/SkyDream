@@ -2,6 +2,7 @@
 
 #include "Render_ShaderHelpers.h"
 
+#include "Core_FileHelpers.h"
 #include "stb_image.h"
 
 namespace Render
@@ -28,7 +29,7 @@ namespace Render
 		VkDeviceSize vertexBufferSize = sizeof(ShaderHelpers::Vertex) * someVertices.size();
 		VkDeviceSize indexBufferSize = sizeof(uint) * someIndices.size();
 		int texWidth, texHeight, texChannels;
-		stbi_uc* pixels = stbi_load(aTextureFilename.c_str(), &texWidth, &texHeight, &texChannels, STBI_rgb_alpha);
+		stbi_uc* pixels = stbi_load(FileHelpers::RedirectFilePath(aTextureFilename.c_str()).c_str(), &texWidth, &texHeight, &texChannels, STBI_rgb_alpha);
 		Assert(pixels, "Failed to load an image!");
 
 		VkDeviceSize textureSize = static_cast<VkDeviceSize>(texWidth) * static_cast<VkDeviceSize>(texHeight) * 4;

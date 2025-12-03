@@ -1,5 +1,6 @@
 #include "Localization_Module.h"
 
+#include "Core_FileHelpers.h"
 #include <fstream>
 
 namespace Loc
@@ -40,7 +41,7 @@ namespace Localization
 
 	void LocalizationModule::OnInitialize()
 	{
-		LoadLocalizationFile("Frameworks/Localization/", "Core");
+		LoadLocalizationFile(FileHelpers::RedirectFilePath("Frameworks/Localization/").c_str(), "Core");
 	}
 
 	bool LocalizationModule::LoadLocalizationFile(const char* aFilePath, const char* aFileName)

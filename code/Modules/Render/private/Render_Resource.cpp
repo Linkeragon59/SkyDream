@@ -51,7 +51,7 @@ namespace Render
 		void AddToDelete(RenderResource* aResource)
 		{
 			// TODO : Not sure why we need this +1, without it we sometimes releasing too early and get validation errors
-			ResourceToDelete resource = { aResource, Core::TimeModule::GetInstance()->GetFrameCounter() + RenderCore::GetInstance()->GetInFlightFramesCount() + 1 };
+			ResourceToDelete resource = { aResource, Core::TimeModule::GetInstance()->GetFrameCounter() + RenderCore::GetInstance()->GetInFlightFramesCount() + 2 };
 			
 			std::lock_guard<std::mutex> lock(myMutex);
 			myResourcesToDelete.push(resource);

@@ -62,6 +62,47 @@ void ImGui::DrawDottedLine(const ImVec2& aStart, const ImVec2& anEnd, float aDot
     }
 }
 
+void ImGui::DrawDottedLightRaySin(const ImVec2& aStart, const ImVec2& anEnd, float anAmplitude, float aFrequency, float aPhaseAtStart, int aSegmentsCount, float aSkipSegmentsRatio, ImU32 aColor, float aThickness /*= 1.0f*/)
+{
+    if (aSegmentsCount <= 0)
+        return;
+
+    ImVec2 u = anEnd - aStart;
+    float length = ImSqrt(u.x * u.x + u.y * u.y);
+
+    if (length <= FLT_EPSILON)
+        return;
+
+    u /= length;
+    ImVec2 v = ImVec2(u.y, -u.x);
+
+    ImGuiWindow* window = GetCurrentWindow();
+
+    float step = length / aSegmentsCount;
+    float skipCounter = 0.f;
+    aSkipSegmentsRatio = std::clamp(aSkipSegmentsRatio, 0.f, 1.f);
+
+    for (int n = 0; n < aSegmentsCount; n++)
+    {
+        skipCounter += aSkipSegmentsRatio;
+        if (skipCounter >= 1.f)
+            skipCounter -= 1.f;
+
+        if (skipCounter < aSkipSegmentsRatio)
+            continue;
+
+        float x = n * step;
+        float y = anAmplitude * ImSin(2.f * 3.1416f * aFrequency * x + aPhaseAtStart);
+        ImVec2 segStart = aStart + x * u + y * v;
+
+        x += step;
+        y = anAmplitude * ImSin(2.f * 3.1416f * aFrequency * x + aPhaseAtStart);
+        ImVec2 segEnd = aStart + x * u + y * v;
+
+        window->DrawList->AddLine(segStart, segEnd, aColor, aThickness);
+    }
+}
+
 #endif
 
 #endif

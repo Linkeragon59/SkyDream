@@ -3,9 +3,6 @@ cmake_minimum_required(VERSION 3.16)
 add_subdirectory(Asteorhythm)
 set_target_properties(Asteorhythm PROPERTIES FOLDER "Executables")
 
-add_subdirectory(DiffractionProto)
-set_target_properties(DiffractionProto PROPERTIES FOLDER "Executables")
-
 add_subdirectory(LocalLLMTest)
 set_target_properties(LocalLLMTest PROPERTIES FOLDER "Executables")
 

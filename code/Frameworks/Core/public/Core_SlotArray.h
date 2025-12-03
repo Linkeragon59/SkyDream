@@ -5,6 +5,7 @@ struct SlotArray
 {
 	uint Add(const T& anEntry);
 	inline void Remove(uint anEntryId);
+	const T& Get(uint anEntryId) const;
 	uint GetUsedCount() const;
 
 	std::vector<T> myEntries;
@@ -31,6 +32,13 @@ void SlotArray<T>::Remove(uint anEntryId)
 {
 	Assert(anEntryId < myEntries.size());
 	myEntries[anEntryId].Clear();
+}
+
+template<typename T>
+const T& SlotArray<T>::Get(uint anEntryId) const
+{
+	Assert(anEntryId < myEntries.size());
+	return myEntries[anEntryId];
 }
 
 template<typename T>

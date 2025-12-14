@@ -39,8 +39,9 @@ namespace ImVec2Util
 
 namespace ImGui
 {
+    IMGUI_API void DrawDottedLine(const ImVec2& aStart, const ImVec2& anEnd, float aRepeatLen, float aDrawRatio, ImU32 aColor, float aThickness = 1.0f);
+    IMGUI_API void DrawDottedLineShifted(const ImVec2& aStart, const ImVec2& anEnd, float aRepeatLen, float aDrawRatio, float aShiftRatio, ImU32 aColor, float aThickness = 1.0f);
     IMGUI_API void DrawLightRaySin(const ImVec2& aStart, const ImVec2& anEnd, float anAmplitude, float aFrequency, float aPhaseAtStart, int aSegmentsCount, ImU32 aColor, float aThickness = 1.0f);
-    IMGUI_API void DrawDottedLine(const ImVec2& aStart, const ImVec2& anEnd, float aDotLen, float aSpaceLen, ImU32 aColor, float aThickness = 1.0f);
     IMGUI_API void DrawDottedLightRaySin(const ImVec2& aStart, const ImVec2& anEnd, float anAmplitude, float aFrequency, float aPhaseAtStart, int aSegmentsCount, float aSkipSegmentsRatio, ImU32 aColor, float aThickness = 1.0f);
 }
 

@@ -16,3 +16,11 @@ inline uint Align(uint aValue, uint aAlignment)
 #define newDebug new
 #endif
 void InitMemoryLeaksDetection();
+
+namespace Maths
+{
+	inline bool IsClose(float aValue1, float aValue2, float anEpsilon = FLT_EPSILON)
+	{
+		return std::abs(aValue1 - aValue2) <= anEpsilon;
+	}
+}

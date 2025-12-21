@@ -9,7 +9,12 @@
 
 #pragma warning(pop)
 
+#pragma warning(push)
+#pragma warning(disable:5311)
+
 #define TINYGLTF_IMPLEMENTATION
 #define TINYGLTF_NO_STB_IMAGE_WRITE
 #define STB_IMAGE_IMPLEMENTATION
 #include "tiny_gltf.h"
+
+#pragma warning(pop)

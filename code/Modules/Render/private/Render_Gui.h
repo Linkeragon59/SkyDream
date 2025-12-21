@@ -57,14 +57,14 @@ namespace Render
 		double myCursorYPos = 0.0;
 
 		uint myTouchCallbackId = UINT_MAX;
-		struct TouchData
+		struct TouchToMouseEvent
 		{
 			bool myDown = false;
 			glm::vec2 myPos = { 0.f, 0.f };
 		};
 		std::map<uint64, glm::vec2> myActiveTouches;
-		std::optional<uint64> myLastFingerId;
-		std::queue<TouchData> myTouchData;
+		std::optional<uint64> myTouchToMouseFingerId;
+		std::queue<TouchToMouseEvent> myTouchToMouseEventsQueue;
 
 		uint myScrollCallbackId = UINT_MAX;
 		bool myScrollChanged = false;

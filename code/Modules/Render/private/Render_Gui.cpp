@@ -147,7 +147,7 @@ namespace Render
 
 		myGuiContext = ImGui::CreateContext();
 		myPlotContext = ImPlot::CreateContext();
-		
+
 		glfwGetWindowSize(myWindow, &myWindowWidth, &myWindowHeight);
 		myWindowResizeCallbackId = Core::WindowModule::GetInstance()->AddWindowSizeCallback([this](int aWidth, int aHeight) {
 			myWindowWidth = aWidth;
@@ -176,45 +176,50 @@ namespace Render
 		}, myWindow);
 
 		myTouchCallbackId = Core::InputModule::GetInstance()->AddTouchCallback([this](uint64 aFingerId, double anX, double anY, int anUp) {
+			bool isFakeTouch = Core::InputModule::GetInstance()->IsFakeTouchId(aFingerId);
 			if (anUp)
 			{
-				if (myLastFingerId.has_value() && aFingerId == myLastFingerId.value())
+				if (!isFakeTouch && myTouchToMouseFingerId.has_value() && myTouchToMouseFingerId.value() == aFingerId)
 				{
-					myTouchData.push({ false, { anX, anY } });
-					myLastFingerId.reset();
+					myTouchToMouseEventsQueue.push({ false, { anX, anY } });
+					myTouchToMouseFingerId.reset();
 				}
 				myActiveTouches.erase(aFingerId);
 			}
 			else
 			{
-				std::optional<uint64> previousLastFingerId = myLastFingerId;
+				std::optional<uint64> previousTouchToMouseFingerId = myTouchToMouseFingerId;
 
 				auto previousTouch = myActiveTouches.find(aFingerId);
 				if (previousTouch != myActiveTouches.end())
 				{
+					// Early return if duplicated touch event
 					if (std::abs(anX - previousTouch->second.x) < DBL_EPSILON && std::abs(anY - previousTouch->second.y) < DBL_EPSILON)
-						return; // Duplicate touch event
+						return;
 
-					if (!myLastFingerId.has_value())
-						myLastFingerId = aFingerId;
+					// If we don't have a touch to mouse yet, this finger id becomes our new one
+					if (!isFakeTouch && !myTouchToMouseFingerId.has_value())
+						myTouchToMouseFingerId = aFingerId;
 				}
-				else
+				else if (!isFakeTouch)
 				{
-					myLastFingerId = aFingerId;
+					// New finger id, this is our new touch to mouse
+					myTouchToMouseFingerId = aFingerId;
 				}
 
-				if (previousLastFingerId.has_value() && previousLastFingerId != myLastFingerId)
+				// If the touch to mouse finger id changed, send a mouse up event for the previous one
+				if (previousTouchToMouseFingerId.has_value() && previousTouchToMouseFingerId != myTouchToMouseFingerId)
 				{
-					previousTouch = myActiveTouches.find(previousLastFingerId.value());
+					previousTouch = myActiveTouches.find(previousTouchToMouseFingerId.value());
 					if (previousTouch != myActiveTouches.end())
 					{
-						myTouchData.push({ false, previousTouch->second });
+						myTouchToMouseEventsQueue.push({ false, previousTouch->second });
 					}
 				}
 
-				if (myLastFingerId.has_value() && aFingerId == myLastFingerId.value())
+				if (myTouchToMouseFingerId.has_value() && myTouchToMouseFingerId.value() == aFingerId)
 				{
-					myTouchData.push({ true, { anX, anY } });
+					myTouchToMouseEventsQueue.push({ true, { anX, anY } });
 				}
 
 				myActiveTouches[aFingerId] = { anX, anY };
@@ -238,7 +243,7 @@ namespace Render
 		myCharacterCallbackId = Core::InputModule::GetInstance()->AddCharacterCallback([this](uint aUnicodeCodePoint) {
 			myTextInput.push(aUnicodeCodePoint);
 		}, myWindow);
-		
+
 		PrepareFont();
 
 		InitStyle();
@@ -283,12 +288,12 @@ namespace Render
 			myCursorXPos = myCursorYPos = 0.0;
 		}
 
-		while (!myTouchData.empty())
+		while (!myTouchToMouseEventsQueue.empty())
 		{
-			TouchData& data = myTouchData.front();
-			io.AddMousePosEvent(data.myPos.x, data.myPos.y);
-			io.AddMouseButtonEvent(ImGuiMouseButton_Left, data.myDown);
-			myTouchData.pop();
+			TouchToMouseEvent& event = myTouchToMouseEventsQueue.front();
+			io.AddMousePosEvent(event.myPos.x, event.myPos.y);
+			io.AddMouseButtonEvent(ImGuiMouseButton_Left, event.myDown);
+			myTouchToMouseEventsQueue.pop();
 		}
 
 		if (myScrollChanged)

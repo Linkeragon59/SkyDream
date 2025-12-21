@@ -176,7 +176,7 @@ namespace Core
 
 	class InputModule : public Module
 	{
-	DECLARE_CORE_MODULE(InputModule, "Input")
+		DECLARE_CORE_MODULE(InputModule, "Input")
 
 	protected:
 		void OnRegister() override;
@@ -229,6 +229,9 @@ namespace Core
 		SlotArray<Input::CallbackEntry<Input::CharacterCallback>> myCharacterCallbacks;
 
 #if ALLOW_FAKE_TOUCHES
+	public:
+		bool IsFakeTouchId(uint64 aFingerId) const;
+	private:
 		uint64 GetNextFakeTouchId() const;
 		std::set<uint64> myFakeTouchIds;
 #endif

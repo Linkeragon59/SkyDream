@@ -300,7 +300,7 @@ namespace Core
 
 	void InputModule::OnMouseCallback(GLFWwindow* aWindow, int aButton, int anAction, int someMods)
 	{
-		for(const Input::CallbackEntry<Input::MouseCallback>& entry : ourInstance->myMouseCallbacks.myEntries)
+		for (const Input::CallbackEntry<Input::MouseCallback>& entry : ourInstance->myMouseCallbacks.myEntries)
 		{
 			if (entry.IsSet() && (!entry.myWindow || aWindow == entry.myWindow))
 			{
@@ -367,11 +367,18 @@ namespace Core
 	}
 
 #if ALLOW_FAKE_TOUCHES
+	bool InputModule::IsFakeTouchId(uint64 aFingerId) const
+	{
+		// TODO : Improve
+		return (UINT64_MAX - aFingerId) < 100;
+	}
+
 	uint64 InputModule::GetNextFakeTouchId() const
 	{
 		uint64 fakeId = UINT64_MAX;
 		while (myFakeTouchIds.find(fakeId) != myFakeTouchIds.end())
 			fakeId--;
+		Assert(IsFakeTouchId(fakeId));
 		return fakeId;
 	}
 #endif

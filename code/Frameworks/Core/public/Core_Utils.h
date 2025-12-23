@@ -23,4 +23,9 @@ namespace Maths
 	{
 		return std::abs(aValue1 - aValue2) <= anEpsilon;
 	}
+
+	inline bool IsClose(const glm::vec2& aValue1, const glm::vec2& aValue2, float anEpsilon = FLT_EPSILON)
+	{
+		return IsClose(aValue1.x, aValue2.x, anEpsilon) && IsClose(aValue1.y, aValue2.y, anEpsilon);
+	}
 }

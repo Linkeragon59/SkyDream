@@ -11,5 +11,6 @@
 #include "gtc/quaternion.hpp"
 #include "gtx/transform.hpp"
 #include "gtx/quaternion.hpp"
+#include "gtx/hash.hpp"
 
 #pragma warning(pop)

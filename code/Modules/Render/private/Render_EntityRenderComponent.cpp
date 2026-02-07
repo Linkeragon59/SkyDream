@@ -22,7 +22,7 @@ namespace Render
 		myGui->Update(myCallback);
 	}
 
-	ImFont* EntityGuiComponent::GetFont(FontType aFontType) const
+	const FontDesc& EntityGuiComponent::GetFont(FontType aFontType) const
 	{
 		return myGui->GetFont(aFontType);
 	}

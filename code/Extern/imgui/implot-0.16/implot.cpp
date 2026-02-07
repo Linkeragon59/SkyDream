@@ -292,7 +292,7 @@ struct ImPlotStyleVarInfo {
 
 static const ImPlotStyleVarInfo GPlotStyleVarInfo[] =
 {
-#ifdef IMGUI_PANDA
+#ifdef IMGUI_SKYDREAM
 	{ ImGuiDataType_Float, 1, (ImU32)offsetof(ImPlotStyle, LineWeight)         }, // ImPlotStyleVar_LineWeight
 	{ ImGuiDataType_S32,   1, (ImU32)offsetof(ImPlotStyle, Marker)             }, // ImPlotStyleVar_Marker
 	{ ImGuiDataType_Float, 1, (ImU32)offsetof(ImPlotStyle, MarkerSize)         }, // ImPlotStyleVar_MarkerSize
@@ -372,7 +372,7 @@ void AddTextVertical(ImDrawList *DrawList, ImVec2 pos, ImU32 col, const char *te
     ImGuiContext& g = *GImGui;
     ImFont* font = g.Font;
     // Align to be pixel perfect
-#ifdef IMGUI_PANDA
+#ifdef IMGUI_SKYDREAM
 	pos.x = IM_TRUNC(pos.x);
 	pos.y = IM_TRUNC(pos.y);
 #else

@@ -9,6 +9,7 @@
 
 struct ImGuiContext;
 struct ImPlotContext;
+struct ImTextureData;
 
 namespace Render
 {
@@ -25,7 +26,7 @@ namespace Render
 		ImPlotContext* GetPlotContext() const { return myPlotContext; }
 		GLFWwindow* GetWindow() const { return myWindow; }
 
-		ImFont* GetFont(FontType aFontType) const { return myFontMap.GetFont(aFontType); }
+		const FontDesc& GetFont(FontType aFontType) const { return myFontMap.GetFont(aFontType); }
 
 	private:
 		ImGuiContext* myGuiContext = nullptr;
@@ -41,7 +42,6 @@ namespace Render
 		uint myWindowContentScaleCallbackId = UINT_MAX;
 		float myContentScaleX = 1.f;
 		float myContentScaleY = 1.f;
-		bool myReloadFont = false;
 
 		uint myMouseCallbackId;
 		struct MouseData
@@ -82,18 +82,18 @@ namespace Render
 		uint myCharacterCallbackId = UINT_MAX;
 		std::queue<uint> myTextInput;
 
-		void PrepareFont();
-		ImagePtr myFontTexture;
-		FontMap myFontMap;
-
-		ShaderHelpers::GuiPushConstBlock myPushConstBlock;
-
 		BufferPtr myVertexBuffer;
 		int myVertexCount = 0;
 		BufferPtr myIndexBuffer;
 		int myIndexCount = 0;
+		std::map<int, ImagePtr> myTextures;
+		ShaderHelpers::GuiPushConstBlock myPushConstBlock;
 
-		void InitStyle();
 		void InitIO();
+		void InitStyle();
+		void PrepareFont();
+		FontMap myFontMap;
+
+		void UpdateTexture(ImTextureData* aTexture);
 	};
 }

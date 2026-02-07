@@ -158,7 +158,7 @@ namespace Render
 		myWindowContentScaleCallbackId = Core::WindowModule::GetInstance()->AddContentScaleCallback([this](float aContentScaleX, float aContentScaleY) {
 			myContentScaleX = aContentScaleX;
 			myContentScaleY = aContentScaleY;
-			myReloadFont = true;
+			// Not sure why we don't need to update style.FontScaleDpi here?..
 		}, myWindow);
 
 		myMouseCallbackId = Core::InputModule::GetInstance()->AddMouseCallback([this](Input::MouseButton aButton, Input::Status aStatus, Input::Modifier someModifiers) {
@@ -244,10 +244,10 @@ namespace Render
 			myTextInput.push(aUnicodeCodePoint);
 		}, myWindow);
 
-		PrepareFont();
-
-		InitStyle();
+		ImGui::SetCurrentContext(myGuiContext);
 		InitIO();
+		InitStyle();
+		PrepareFont();
 	}
 
 	Gui::~Gui()
@@ -343,14 +343,8 @@ namespace Render
 
 		ImGui::Render();
 
-		if (myReloadFont)
-		{
-			PrepareFont();
-			myReloadFont = false;
-		}
-
 		ImDrawData* imDrawData = ImGui::GetDrawData();
-		if (!imDrawData || imDrawData->CmdListsCount == 0)
+		if (!imDrawData || imDrawData->TotalVtxCount <= 0)
 			return;
 
 		VkDeviceSize vertexBufferSize = imDrawData->TotalVtxCount * sizeof(ImDrawVert);
@@ -394,15 +388,18 @@ namespace Render
 	void Gui::Draw(VkCommandBuffer aCommandBuffer, VkPipelineLayout aPipelineLayout, uint aDescriptorSetIndex, const std::function<VkDescriptorSet(const ShaderHelpers::DescriptorInfo&)>& myDescriptorSetGetter)
 	{
 		ImGui::SetCurrentContext(myGuiContext);
+
 		ImDrawData* imDrawData = ImGui::GetDrawData();
-		if (!imDrawData || imDrawData->CmdListsCount == 0)
+		if (!imDrawData || imDrawData->TotalVtxCount <= 0)
 			return;
 
-		ShaderHelpers::GuiDescriptorInfo info;
-		info.myFontSamplerInfo = &myFontTexture->myDescriptor;
-		VkDescriptorSet descriptorSet = myDescriptorSetGetter(info);
-
-		vkCmdBindDescriptorSets(aCommandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, aPipelineLayout, aDescriptorSetIndex, 1, &descriptorSet, 0, nullptr);
+		if (imDrawData->Textures)
+		{
+			for (ImTextureData* texture : *imDrawData->Textures)
+			{
+				UpdateTexture(texture);
+			}
+		}
 
 		ImGuiIO& io = ImGui::GetIO();
 		myPushConstBlock.myScale = glm::vec2(2.0f / io.DisplaySize.x, 2.0f / io.DisplaySize.y);
@@ -415,104 +412,50 @@ namespace Render
 
 		int vertexOffset = 0;
 		int indexOffset = 0;
-		for (int i = 0; i < imDrawData->CmdListsCount; i++)
+		for (const ImDrawList* cmdList : imDrawData->CmdLists)
 		{
-			const ImDrawList* cmdList = imDrawData->CmdLists[i];
-			for (int j = 0; j < cmdList->CmdBuffer.Size; j++)
+			for (const ImDrawCmd& cmd : cmdList->CmdBuffer)
 			{
-				const ImDrawCmd* cmd = &cmdList->CmdBuffer[j];
-
 				VkRect2D scissorRect{};
-				scissorRect.offset.x = std::max((int)cmd->ClipRect.x, 0);
-				scissorRect.offset.y = std::max((int)cmd->ClipRect.y, 0);
-				scissorRect.extent.width = (uint32_t)(cmd->ClipRect.z - cmd->ClipRect.x);
-				scissorRect.extent.height = (uint32_t)(cmd->ClipRect.w - cmd->ClipRect.y);
+				scissorRect.offset.x = std::max((int)cmd.ClipRect.x, 0);
+				scissorRect.offset.y = std::max((int)cmd.ClipRect.y, 0);
+				scissorRect.extent.width = (uint32_t)(cmd.ClipRect.z - cmd.ClipRect.x);
+				scissorRect.extent.height = (uint32_t)(cmd.ClipRect.w - cmd.ClipRect.y);
 				vkCmdSetScissor(aCommandBuffer, 0, 1, &scissorRect);
 
-				ImTextureID textureID = cmd->TextureId;
-				if (textureID)
+				ImTextureID textureID = cmd.GetTexID();
+				if (textureID != ImTextureID_Invalid)
 				{
+					ShaderHelpers::GuiDescriptorInfo info;
 					info.myFontSamplerInfo = (const VkDescriptorImageInfo*)textureID;
-					VkDescriptorSet descriptorSetCustom = myDescriptorSetGetter(info);
-					vkCmdBindDescriptorSets(aCommandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, aPipelineLayout, aDescriptorSetIndex, 1, &descriptorSetCustom, 0, nullptr);
-				}
-
-				vkCmdDrawIndexed(aCommandBuffer, cmd->ElemCount, 1, indexOffset, vertexOffset, 0);
-				indexOffset += cmd->ElemCount;
-
-				if (textureID)
-				{
+					VkDescriptorSet descriptorSet = myDescriptorSetGetter(info);
 					vkCmdBindDescriptorSets(aCommandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, aPipelineLayout, aDescriptorSetIndex, 1, &descriptorSet, 0, nullptr);
 				}
+
+				vkCmdDrawIndexed(aCommandBuffer, cmd.ElemCount, 1, indexOffset, vertexOffset, 0);
+				indexOffset += cmd.ElemCount;
 			}
 			vertexOffset += cmdList->VtxBuffer.Size;
 		}
 	}
 
-	void Gui::PrepareFont()
+	void Gui::InitIO()
 	{
-		ImGui::SetCurrentContext(myGuiContext);
 		ImGuiIO& io = ImGui::GetIO();
-		io.Fonts->Clear();
 
-		// Create font texture
-		unsigned char* fontData;
-		int texWidth, texHeight;
-		myFontMap.Clear();
-		myFontMap.SetFont(FontType::Regular, io.Fonts->AddFontFromFileTTF(FileHelpers::RedirectFilePath("Frameworks/Fonts/NotoSans-Regular.ttf").c_str(), 16.f * myContentScaleY));
-		myFontMap.SetFont(FontType::Bold, io.Fonts->AddFontFromFileTTF(FileHelpers::RedirectFilePath("Frameworks/Fonts/NotoSans-Bold.ttf").c_str(), 16.f * myContentScaleY));
-		myFontMap.SetFont(FontType::Italic, io.Fonts->AddFontFromFileTTF(FileHelpers::RedirectFilePath("Frameworks/Fonts/NotoSans-Italic.ttf").c_str(), 16.f * myContentScaleY));
-		myFontMap.SetFont(FontType::Large, io.Fonts->AddFontFromFileTTF(FileHelpers::RedirectFilePath("Frameworks/Fonts/NotoSans-Regular.ttf").c_str(), 32.f * myContentScaleY));
-		myFontMap.SetFont(FontType::Title, io.Fonts->AddFontFromFileTTF(FileHelpers::RedirectFilePath("Frameworks/Fonts/NotoSans-Bold.ttf").c_str(), 32.f * myContentScaleY));
+		// For now, disable the .ini files, as it is not useful so far
+		io.IniFilename = nullptr;
 
-		io.Fonts->GetTexDataAsRGBA32(&fontData, &texWidth, &texHeight);
-
-		VkDeviceSize textureSize = texWidth * texHeight * 4;
-		Buffer textureStaging;
-		textureStaging.Create(textureSize,
-			VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
-			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
-		textureStaging.Map();
-		memcpy(textureStaging.myMappedData, fontData, static_cast<size_t>(textureSize));
-		textureStaging.Unmap();
-
-		myFontTexture = new Image(texWidth, texHeight,
-			VK_FORMAT_R8G8B8A8_UNORM,
-			VK_IMAGE_TILING_OPTIMAL,
-			VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT,
-			VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
-
-		myFontTexture->TransitionLayout(VK_IMAGE_LAYOUT_UNDEFINED,
-			VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
-			RenderCore::GetInstance()->GetGraphicsQueue());
-
-		VkCommandBuffer commandBuffer = Helpers::BeginOneTimeCommand();
-		{
-			VkBufferImageCopy imageCopyRegion{};
-			imageCopyRegion.imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-			imageCopyRegion.imageSubresource.mipLevel = 0;
-			imageCopyRegion.imageSubresource.baseArrayLayer = 0;
-			imageCopyRegion.imageSubresource.layerCount = 1;
-			imageCopyRegion.imageExtent = { static_cast<uint>(texWidth), static_cast<uint>(texHeight), 1 };
-			vkCmdCopyBufferToImage(commandBuffer, textureStaging.myBuffer, myFontTexture->myImage, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &imageCopyRegion);
-		}
-		Helpers::EndOneTimeCommand(commandBuffer, RenderCore::GetInstance()->GetGraphicsQueue());
-
-		textureStaging.Destroy();
-
-		myFontTexture->TransitionLayout(VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
-			VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL,
-			RenderCore::GetInstance()->GetGraphicsQueue());
-
-		myFontTexture->CreateImageView(VK_IMAGE_ASPECT_COLOR_BIT);
-		myFontTexture->CreateImageSampler();
-		myFontTexture->SetupDescriptor();
+		// We are now responsible to create/update/destroy the textures as requested by ImGui
+		io.BackendFlags |= ImGuiBackendFlags_RendererHasTextures;
 	}
 
 	void Gui::InitStyle()
 	{
+		ImGuiStyle& style = ImGui::GetStyle();
+		style.FontScaleDpi = myContentScaleY;
+
 		// For now keep the defaults
-		//ImGuiStyle& style = ImGui::GetStyle();
 		//style.Colors[ImGuiCol_TitleBg] = ImVec4(1.0f, 0.0f, 0.0f, 1.0f);
 		//style.Colors[ImGuiCol_TitleBgActive] = ImVec4(1.0f, 0.0f, 0.0f, 1.0f);
 		//style.Colors[ImGuiCol_TitleBgCollapsed] = ImVec4(1.0f, 0.0f, 0.0f, 0.1f);
@@ -531,11 +474,88 @@ namespace Render
 		//style.Colors[ImGuiCol_ButtonActive] = ImVec4(1.0f, 0.0f, 0.0f, 0.8f);
 	}
 
-	void Gui::InitIO()
+	void Gui::PrepareFont()
 	{
 		ImGuiIO& io = ImGui::GetIO();
+		io.Fonts->Clear();
+		myFontMap.Clear();
+		myFontMap.SetFont(FontType::Regular, io.Fonts->AddFontFromFileTTF(FileHelpers::RedirectFilePath("Frameworks/Fonts/NotoSans-Regular.ttf").c_str(), 0.f), 16.f);
+		myFontMap.SetFont(FontType::Bold, io.Fonts->AddFontFromFileTTF(FileHelpers::RedirectFilePath("Frameworks/Fonts/NotoSans-Bold.ttf").c_str(), 0.f), 16.f);
+		myFontMap.SetFont(FontType::Italic, io.Fonts->AddFontFromFileTTF(FileHelpers::RedirectFilePath("Frameworks/Fonts/NotoSans-Italic.ttf").c_str(), 0.f), 16.f);
+		myFontMap.SetFont(FontType::Large, io.Fonts->AddFontFromFileTTF(FileHelpers::RedirectFilePath("Frameworks/Fonts/NotoSans-Regular.ttf").c_str(), 0.f), 32.f);
+		myFontMap.SetFont(FontType::Title, io.Fonts->AddFontFromFileTTF(FileHelpers::RedirectFilePath("Frameworks/Fonts/NotoSans-Bold.ttf").c_str(), 0.f), 32.f);
+		io.Fonts->CompactCache();
+	}
 
-		// For now, disable the .ini files, as it is not useful so far
-		io.IniFilename = nullptr;
+	void Gui::UpdateTexture(ImTextureData* aTexture)
+	{
+		if (!aTexture || aTexture->Status == ImTextureStatus_OK)
+			return;
+
+		if (aTexture->Status == ImTextureStatus_WantCreate)
+		{
+			Assert(!myTextures.contains(aTexture->UniqueID), "New ImGui texture already in the textures map when creating!");
+
+			ImagePtr& newTexture = myTextures[aTexture->UniqueID];
+			newTexture = new Image(aTexture->Width, aTexture->Height,
+				VK_FORMAT_R8G8B8A8_UNORM,
+				VK_IMAGE_TILING_OPTIMAL,
+				VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT,
+				VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
+			newTexture->CreateImageView(VK_IMAGE_ASPECT_COLOR_BIT);
+			newTexture->CreateImageSampler();
+			newTexture->SetupDescriptor();
+
+			aTexture->SetTexID((ImTextureID)&newTexture->myDescriptor);
+		}
+
+		if (aTexture->Status == ImTextureStatus_WantCreate || aTexture->Status == ImTextureStatus_WantUpdates)
+		{
+			Assert(myTextures.contains(aTexture->UniqueID), "Existing ImGui texture not in the textures map when updating!");
+			ImagePtr& existingTexture = myTextures[aTexture->UniqueID];
+
+			VkDeviceSize textureSize = aTexture->Width * aTexture->Height * 4;
+
+			Buffer textureStaging;
+			textureStaging.Create(textureSize,
+				VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+				VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+			textureStaging.Map();
+			memcpy(textureStaging.myMappedData, aTexture->Pixels, static_cast<size_t>(textureSize));
+			textureStaging.Unmap();
+
+			existingTexture->TransitionLayout(VK_IMAGE_LAYOUT_UNDEFINED,
+				VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
+				RenderCore::GetInstance()->GetGraphicsQueue());
+
+			VkCommandBuffer commandBuffer = Helpers::BeginOneTimeCommand();
+			{
+				VkBufferImageCopy imageCopyRegion{};
+				imageCopyRegion.imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+				imageCopyRegion.imageSubresource.mipLevel = 0;
+				imageCopyRegion.imageSubresource.baseArrayLayer = 0;
+				imageCopyRegion.imageSubresource.layerCount = 1;
+				imageCopyRegion.imageExtent = { static_cast<uint>(aTexture->Width), static_cast<uint>(aTexture->Height), 1 };
+				vkCmdCopyBufferToImage(commandBuffer, textureStaging.myBuffer, existingTexture->myImage, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &imageCopyRegion);
+			}
+			Helpers::EndOneTimeCommand(commandBuffer, RenderCore::GetInstance()->GetGraphicsQueue());
+
+			textureStaging.Destroy();
+
+			existingTexture->TransitionLayout(VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
+				VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL,
+				RenderCore::GetInstance()->GetGraphicsQueue());
+
+			aTexture->SetStatus(ImTextureStatus_OK);
+		}
+
+		if (aTexture->Status == ImTextureStatus_WantDestroy)
+		{
+			Assert(myTextures.contains(aTexture->UniqueID), "Existing ImGui texture not in the textures map when destroying!");
+			myTextures.erase(aTexture->UniqueID);
+
+			aTexture->SetTexID(ImTextureID_Invalid);
+			aTexture->SetStatus(ImTextureStatus_Destroyed);
+		}
 	}
 }

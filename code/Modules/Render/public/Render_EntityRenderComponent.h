@@ -17,7 +17,7 @@ namespace Render
 		~EntityGuiComponent();
 
 		void Update();
-		ImFont* GetFont(FontType aFontType) const;
+		const FontDesc& GetFont(FontType aFontType) const;
 
 		GLFWwindow* myWindow = nullptr;
 		Gui* myGui = nullptr;

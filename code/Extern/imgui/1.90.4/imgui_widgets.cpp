@@ -1038,7 +1038,7 @@ void ImGui::Image(ImTextureID user_texture_id, const ImVec2& image_size, const I
     window->DrawList->AddImage(user_texture_id, bb.Min + padding, bb.Max - padding, uv0, uv1, GetColorU32(tint_col));
 }
 
-#ifdef IMGUI_PANDA
+#ifdef IMGUI_SKYDREAM
 void ImGui::ImageRotated(ImTextureID user_texture_id, const ImVec2& image_size, int rotation_degree, const ImVec2& uv0, const ImVec2& uv1, const ImVec4& tint_col, const ImVec4& border_col)
 {
     int angle = rotation_degree % 360;

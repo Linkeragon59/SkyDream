@@ -14,20 +14,23 @@ namespace Render
 		Count
 	};
 
+	struct FontDesc
+	{
+		void Clear() { myFont = nullptr; mySize = 0.f; }
+		ImFont* myFont = nullptr;
+		float mySize = 0.f;
+	};
+
 	struct FontMap
 	{
-		FontMap()
-		{
-			Clear();
-		}
 		void Clear()
 		{
-			for (size_t i = 0; i < (size_t)FontType::Count; ++i)
-				myFonts[i] = nullptr;
+			for (FontDesc& font : myFonts)
+				font.Clear();
 		}
-		void SetFont(FontType aFontType, ImFont* aFont) { myFonts[(size_t)aFontType] = aFont; }
-		ImFont* GetFont(FontType aFontType) const { return myFonts[(size_t)aFontType]; }
+		void SetFont(FontType aFontType, ImFont* aFont, float aFontSize) { myFonts[(size_t)aFontType] = { aFont, aFontSize }; }
+		const FontDesc& GetFont(FontType aFontType) const { return myFonts[(size_t)aFontType]; }
 	private:
-		std::array<ImFont*, (size_t)FontType::Count> myFonts;
+		std::array<FontDesc, (size_t)FontType::Count> myFonts;
 	};
 }

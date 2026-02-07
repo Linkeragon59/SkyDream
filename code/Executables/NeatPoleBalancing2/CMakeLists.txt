@@ -9,7 +9,6 @@ target_sources(NeatPoleBalancing2
 )
 
 target_precompile_headers(NeatPoleBalancing2 PRIVATE Precompile.h)
-target_compile_features(NeatPoleBalancing2 PRIVATE cxx_std_23)
 
 target_include_directories(NeatPoleBalancing2 PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 

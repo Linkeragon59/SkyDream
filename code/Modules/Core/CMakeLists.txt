@@ -43,18 +43,14 @@ target_sources(Core
 )
 
 target_precompile_headers(Core PRIVATE private/Core_Precompile.h)
-target_compile_features(Core PRIVATE cxx_std_23)
 
 target_include_directories(Core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/public)
 target_include_directories(Core PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/private)
 
 target_link_libraries(Core PUBLIC GLM)
-
-target_link_libraries(Core PUBLIC fmtInclude)
-target_link_libraries(Core PUBLIC fmtLib)
-
-target_link_libraries(Core PUBLIC spdlogInclude)
-target_link_libraries(Core PUBLIC spdlogLib)
+target_link_libraries(Core PUBLIC GoogleTest)
+target_link_libraries(Core PUBLIC fmt)
+target_link_libraries(Core PUBLIC spdlog)
 target_compile_definitions(Core PUBLIC SPDLOG_USE_STD_FORMAT)
 
 target_link_libraries(Core PRIVATE GLFW)

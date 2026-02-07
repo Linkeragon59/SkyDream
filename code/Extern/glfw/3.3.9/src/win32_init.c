@@ -104,7 +104,7 @@ static GLFWbool loadLibraries(void)
         GetProcAddress(_glfw.win32.user32.instance, "AdjustWindowRectExForDpi");
     _glfw.win32.user32.GetSystemMetricsForDpi_ = (PFN_GetSystemMetricsForDpi)
         GetProcAddress(_glfw.win32.user32.instance, "GetSystemMetricsForDpi");
-#ifdef GLFW_PANDA
+#ifdef GLFW_SKYDREAM
     _glfw.win32.user32.RegisterTouchWindow_ = (PFN_RegisterTouchWindow)
         GetProcAddress(_glfw.win32.user32.instance, "RegisterTouchWindow");
     _glfw.win32.user32.UnregisterTouchWindow_ = (PFN_UnregisterTouchWindow)

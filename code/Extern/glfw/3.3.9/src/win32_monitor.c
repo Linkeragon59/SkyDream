@@ -243,7 +243,7 @@ void _glfwPollMonitorsWin32(void)
 
     free(disconnected);
 
-#ifdef GLFW_PANDA
+#ifdef GLFW_SKYDREAM
 	for (i = 0; i < _glfw.monitorCount; i++)
 	{
 		_glfwInputMonitor(_glfw.monitors[i], GLFW_UPDATED, 0);

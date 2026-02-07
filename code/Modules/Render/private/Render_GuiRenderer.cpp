@@ -120,8 +120,8 @@ namespace Render
 			vkCreatePipelineLayout(myDevice, &pipelineLayoutCreateInfo, nullptr, &myPipelineLayout),
 			"Failed to create the pipeline layout");
 	
-		VkShaderModule vertModule = ShaderHelpers::CreateShaderModule("Frameworks/Shaders/Gui_vert.spv");
-		VkShaderModule fragModule = ShaderHelpers::CreateShaderModule("Frameworks/Shaders/Gui_frag.spv");
+		VkShaderModule vertModule = ShaderHelpers::CreateShaderModule("Modules/Shaders/Gui_vert.spv");
+		VkShaderModule fragModule = ShaderHelpers::CreateShaderModule("Modules/Shaders/Gui_frag.spv");
 	
 		std::array<VkPipelineShaderStageCreateInfo, 2> shaderStages{};
 		shaderStages[0] = {};

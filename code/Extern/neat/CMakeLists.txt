@@ -17,6 +17,4 @@ target_sources(NEAT
 		Specie.cpp
 )
 
-target_compile_features(NEAT PRIVATE cxx_std_23)
-
 target_include_directories(NEAT PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

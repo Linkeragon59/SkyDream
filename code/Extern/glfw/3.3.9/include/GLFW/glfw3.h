@@ -861,7 +861,7 @@ extern "C" {
  *  [window attribute](@ref GLFW_FOCUS_ON_SHOW_attrib).
  */
 #define GLFW_FOCUS_ON_SHOW          0x0002000C
-#ifdef GLFW_PANDA
+#ifdef GLFW_SKYDREAM
 #define GLFW_SUPPORTS_TOUCH         0x0002000D
 #endif
 
@@ -1113,7 +1113,7 @@ extern "C" {
 
 #define GLFW_CONNECTED              0x00040001
 #define GLFW_DISCONNECTED           0x00040002
-#ifdef GLFW_PANDA
+#ifdef GLFW_SKYDREAM
 #define GLFW_UPDATED                0x00040003
 #endif
 
@@ -1517,7 +1517,7 @@ typedef void (* GLFWcursorenterfun)(GLFWwindow* window, int entered);
  */
 typedef void (* GLFWscrollfun)(GLFWwindow* window, double xoffset, double yoffset);
 
-#ifdef GLFW_PANDA
+#ifdef GLFW_SKYDREAM
 typedef void (* GLFWtouchfun)(GLFWwindow* window, uint64_t fingerId, double xpos, double ypos, int up);
 #endif
 
@@ -4826,7 +4826,7 @@ GLFWAPI GLFWcursorenterfun glfwSetCursorEnterCallback(GLFWwindow* window, GLFWcu
  */
 GLFWAPI GLFWscrollfun glfwSetScrollCallback(GLFWwindow* window, GLFWscrollfun callback);
 
-#ifdef GLFW_PANDA
+#ifdef GLFW_SKYDREAM
 GLFWAPI GLFWscrollfun glfwSetTouchCallback(GLFWwindow* window, GLFWtouchfun callback);
 #endif
 

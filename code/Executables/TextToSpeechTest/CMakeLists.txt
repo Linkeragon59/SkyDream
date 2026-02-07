@@ -9,7 +9,6 @@ target_sources(TextToSpeechTest
 )
 
 target_precompile_headers(TextToSpeechTest PRIVATE Precompile.h)
-target_compile_features(TextToSpeechTest PRIVATE cxx_std_23)
 
 target_include_directories(TextToSpeechTest PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 

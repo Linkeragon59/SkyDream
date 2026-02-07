@@ -985,7 +985,7 @@ static LRESULT CALLBACK windowProc(HWND hWnd, UINT uMsg,
             return 0;
         }
 
-#ifdef GLFW_PANDA
+#ifdef GLFW_SKYDREAM
         // Deprecated implementation, now using WM_POINTER instead
         //case WM_TOUCH:
         //{
@@ -1575,7 +1575,7 @@ int _glfwPlatformCreateWindow(_GLFWwindow* window,
         }
     }
 
-#ifdef GLFW_PANDA
+#ifdef GLFW_SKYDREAM
     if (wndconfig->supportsTouch)
         _glfwPlatformRegisterTouchWindow(window, GLFW_TRUE);
 #endif
@@ -2047,7 +2047,7 @@ float _glfwPlatformGetWindowOpacity(_GLFWwindow* window)
     return 1.f;
 }
 
-#ifdef GLFW_PANDA
+#ifdef GLFW_SKYDREAM
 void _glfwPlatformRegisterTouchWindow(_GLFWwindow* window, GLFWbool enabled)
 {
     if (enabled)

@@ -479,11 +479,11 @@ namespace Render
 		ImGuiIO& io = ImGui::GetIO();
 		io.Fonts->Clear();
 		myFontMap.Clear();
-		myFontMap.SetFont(FontType::Regular, io.Fonts->AddFontFromFileTTF(FileHelpers::RedirectFilePath("Frameworks/Fonts/NotoSans-Regular.ttf").c_str(), 0.f), 16.f);
-		myFontMap.SetFont(FontType::Bold, io.Fonts->AddFontFromFileTTF(FileHelpers::RedirectFilePath("Frameworks/Fonts/NotoSans-Bold.ttf").c_str(), 0.f), 16.f);
-		myFontMap.SetFont(FontType::Italic, io.Fonts->AddFontFromFileTTF(FileHelpers::RedirectFilePath("Frameworks/Fonts/NotoSans-Italic.ttf").c_str(), 0.f), 16.f);
-		myFontMap.SetFont(FontType::Large, io.Fonts->AddFontFromFileTTF(FileHelpers::RedirectFilePath("Frameworks/Fonts/NotoSans-Regular.ttf").c_str(), 0.f), 32.f);
-		myFontMap.SetFont(FontType::Title, io.Fonts->AddFontFromFileTTF(FileHelpers::RedirectFilePath("Frameworks/Fonts/NotoSans-Bold.ttf").c_str(), 0.f), 32.f);
+		myFontMap.SetFont(FontType::Regular, io.Fonts->AddFontFromFileTTF(FileHelpers::RedirectFilePath("Modules/Fonts/NotoSans-Regular.ttf").c_str(), 0.f), 16.f);
+		myFontMap.SetFont(FontType::Bold, io.Fonts->AddFontFromFileTTF(FileHelpers::RedirectFilePath("Modules/Fonts/NotoSans-Bold.ttf").c_str(), 0.f), 16.f);
+		myFontMap.SetFont(FontType::Italic, io.Fonts->AddFontFromFileTTF(FileHelpers::RedirectFilePath("Modules/Fonts/NotoSans-Italic.ttf").c_str(), 0.f), 16.f);
+		myFontMap.SetFont(FontType::Large, io.Fonts->AddFontFromFileTTF(FileHelpers::RedirectFilePath("Modules/Fonts/NotoSans-Regular.ttf").c_str(), 0.f), 32.f);
+		myFontMap.SetFont(FontType::Title, io.Fonts->AddFontFromFileTTF(FileHelpers::RedirectFilePath("Modules/Fonts/NotoSans-Bold.ttf").c_str(), 0.f), 32.f);
 		io.Fonts->CompactCache();
 	}
 

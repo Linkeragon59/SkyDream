@@ -18,7 +18,6 @@ target_sources(Piper
 		piper-master/src/cpp/piper.cpp
 )
 
-target_compile_features(Piper PRIVATE cxx_std_23)
 target_compile_options(Piper PRIVATE
 	/wd"4100"
 	/wd"4244"

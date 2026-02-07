@@ -1,10 +1,14 @@
 cmake_minimum_required(VERSION 3.16)
 
-add_library(fmtInclude INTERFACE)
-add_library(fmtLib INTERFACE)
+add_library(fmt STATIC IMPORTED GLOBAL)
 
-target_include_directories(fmtInclude INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/11.2.0/include)
+set(fmtPath ${CMAKE_CURRENT_SOURCE_DIR}/11.2.0)
 
-target_link_directories(fmtLib INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/11.2.0/lib/win64)
-target_link_libraries(fmtLib INTERFACE debug fmtd)
-target_link_libraries(fmtLib INTERFACE optimized fmt)
+set_target_properties(fmt PROPERTIES
+	INTERFACE_INCLUDE_DIRECTORIES
+		${fmtPath}/include
+	IMPORTED_LOCATION_DEBUG
+		${fmtPath}/lib/win64/fmtd.lib
+	IMPORTED_LOCATION
+		${fmtPath}/lib/win64/fmt.lib
+)

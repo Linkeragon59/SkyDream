@@ -513,8 +513,8 @@ namespace Render
 			vkCreatePipelineLayout(myDevice, &pipelineLayoutCreateInfo, nullptr, &myGBufferPipelineLayout),
 			"Failed to create the GBuffer pipeline layout");
 
-		VkShaderModule vertModule = ShaderHelpers::CreateShaderModule("Frameworks/Shaders/GBuffer_vert.spv");
-		VkShaderModule fragModule = ShaderHelpers::CreateShaderModule("Frameworks/Shaders/GBuffer_frag.spv");
+		VkShaderModule vertModule = ShaderHelpers::CreateShaderModule("Modules/Shaders/GBuffer_vert.spv");
+		VkShaderModule fragModule = ShaderHelpers::CreateShaderModule("Modules/Shaders/GBuffer_frag.spv");
 
 		std::array<VkPipelineShaderStageCreateInfo, 2> shaderStages{};
 		shaderStages[0] = {};
@@ -642,8 +642,8 @@ namespace Render
 			vkCreatePipelineLayout(myDevice, &pipelineLayoutCreateInfo, nullptr, &myLightingPipelineLayout),
 			"Failed to create the Lighting pipeline layout");
 
-		VkShaderModule vertModule = ShaderHelpers::CreateShaderModule("Frameworks/Shaders/Composition_vert.spv");
-		VkShaderModule fragModule = ShaderHelpers::CreateShaderModule("Frameworks/Shaders/Composition_frag.spv");
+		VkShaderModule vertModule = ShaderHelpers::CreateShaderModule("Modules/Shaders/Composition_vert.spv");
+		VkShaderModule fragModule = ShaderHelpers::CreateShaderModule("Modules/Shaders/Composition_frag.spv");
 
 		VkSpecializationMapEntry specializationEntry{};
 		specializationEntry.constantID = 0;
@@ -767,8 +767,8 @@ namespace Render
 			vkCreatePipelineLayout(myDevice, &pipelineLayoutCreateInfo, nullptr, &myDebug3DPipelineLayout),
 			"Failed to create the Transparent pipeline layout");
 
-		VkShaderModule vertModule = ShaderHelpers::CreateShaderModule("Frameworks/Shaders/DebugForward_vert.spv");
-		VkShaderModule fragModule = ShaderHelpers::CreateShaderModule("Frameworks/Shaders/DebugForward_frag.spv");
+		VkShaderModule vertModule = ShaderHelpers::CreateShaderModule("Modules/Shaders/DebugForward_vert.spv");
+		VkShaderModule fragModule = ShaderHelpers::CreateShaderModule("Modules/Shaders/DebugForward_frag.spv");
 
 		std::array<VkPipelineShaderStageCreateInfo, 2> shaderStages{};
 		shaderStages[0] = {};
@@ -902,8 +902,8 @@ namespace Render
 			vkCreatePipelineLayout(myDevice, &pipelineLayoutCreateInfo, nullptr, &myGuiPipelineLayout),
 			"Failed to create the GBuffer pipeline layout");
 
-		VkShaderModule vertModule = ShaderHelpers::CreateShaderModule("Frameworks/Shaders/Gui_vert.spv");
-		VkShaderModule fragModule = ShaderHelpers::CreateShaderModule("Frameworks/Shaders/Gui_frag.spv");
+		VkShaderModule vertModule = ShaderHelpers::CreateShaderModule("Modules/Shaders/Gui_vert.spv");
+		VkShaderModule fragModule = ShaderHelpers::CreateShaderModule("Modules/Shaders/Gui_frag.spv");
 
 		std::array<VkPipelineShaderStageCreateInfo, 2> shaderStages{};
 		shaderStages[0] = {};

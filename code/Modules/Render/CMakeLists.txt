@@ -56,16 +56,13 @@ target_sources(Render
 )
 
 target_precompile_headers(Render PRIVATE private/Render_Precompile.h)
-target_compile_features(Render PRIVATE cxx_std_23)
 
 target_include_directories(Render PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/public)
 target_include_directories(Render PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/private)
 
-target_link_libraries(Render PUBLIC VulkanLib)
-
 target_link_libraries(Render PRIVATE Core)
 target_link_libraries(Render PRIVATE VulkanMemoryAllocator)
-target_link_libraries(Render PRIVATE VulkanInclude)
+target_link_libraries(Render PRIVATE Vulkan)
 target_link_libraries(Render PRIVATE GLFW)
 target_link_libraries(Render PRIVATE ImGui)
 target_link_libraries(Render PRIVATE tinyglTF)

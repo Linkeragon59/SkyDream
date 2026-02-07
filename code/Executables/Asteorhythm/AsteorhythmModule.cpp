@@ -41,7 +41,7 @@ void AsteorhythmModule::OnInitialize()
 		myTestAnimatedModel = Core::Entity::Create();
 		myTestAnimatedModel.AddComponent<Core::Entity3DTransformComponent>(glm::vec3(0.0f, 0.0f, 1.0f));
 		Render::EntityglTFModelComponent* modelComponent = myTestAnimatedModel.AddComponent<Render::EntityglTFModelComponent>();
-		modelComponent->myFilename = "Frameworks/Models/CesiumMan/CesiumMan.gltf";
+		modelComponent->myFilename = "Modules/Models/CesiumMan/CesiumMan.gltf";
 		//modelComponent->myFilename = "Executables/Asteorhythm/Asteroid01/Asteroid01.gltf";
 		modelComponent->Load();
 	}

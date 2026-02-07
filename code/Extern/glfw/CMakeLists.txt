@@ -29,9 +29,8 @@ target_sources(GLFW
 		3.3.9/src/osmesa_context.c
 )
 
-target_compile_features(GLFW PRIVATE cxx_std_23)
 target_compile_definitions(GLFW PRIVATE _GLFW_WIN32)
 target_compile_options(GLFW PRIVATE -wd4100 -wd4152 -wd4201 -wd4244 -wd4706 -wd4996)
 
 target_include_directories(GLFW PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/3.3.9/include)
-target_compile_definitions(GLFW PUBLIC GLFW_PANDA)
+target_compile_definitions(GLFW PUBLIC GLFW_SKYDREAM)

@@ -83,7 +83,6 @@ target_sources(SoLoud
 		20200207/src/core/soloud_thread.cpp
 )
 
-target_compile_features(SoLoud PRIVATE cxx_std_23)
 if ( CMAKE_SYSTEM_NAME MATCHES "Windows" )
 	target_compile_options(SoLoud PRIVATE
 		/wd"4100"

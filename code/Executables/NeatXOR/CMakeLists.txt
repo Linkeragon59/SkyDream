@@ -9,7 +9,6 @@ target_sources(NeatXOR
 )
 
 target_precompile_headers(NeatXOR PRIVATE Precompile.h)
-target_compile_features(NeatXOR PRIVATE cxx_std_23)
 
 target_include_directories(NeatXOR PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 

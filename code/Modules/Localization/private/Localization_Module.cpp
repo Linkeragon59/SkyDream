@@ -41,7 +41,7 @@ namespace Localization
 
 	void LocalizationModule::OnInitialize()
 	{
-		LoadLocalizationFile(FileHelpers::RedirectFilePath("Frameworks/Localization/").c_str(), "Core");
+		LoadLocalizationFile(FileHelpers::RedirectFilePath("Modules/Localization/").c_str(), "Core");
 	}
 
 	bool LocalizationModule::LoadLocalizationFile(const char* aFilePath, const char* aFileName)

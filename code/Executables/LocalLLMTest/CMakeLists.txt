@@ -11,7 +11,6 @@ target_sources(LocalLLMTest
 )
 
 target_precompile_headers(LocalLLMTest PRIVATE Precompile.h)
-target_compile_features(LocalLLMTest PRIVATE cxx_std_23)
 
 target_include_directories(LocalLLMTest PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 

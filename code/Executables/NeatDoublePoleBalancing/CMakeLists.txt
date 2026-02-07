@@ -11,7 +11,6 @@ target_sources(NeatDoublePoleBalancing
 )
 
 target_precompile_headers(NeatDoublePoleBalancing PRIVATE Precompile.h)
-target_compile_features(NeatDoublePoleBalancing PRIVATE cxx_std_23)
 
 target_include_directories(NeatDoublePoleBalancing PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 

@@ -1,21 +1,24 @@
 cmake_minimum_required(VERSION 3.16)
 
-add_library(GLM INTERFACE)
-
-target_include_directories(GLM INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/1.3.275.0/include/glm)
+set(VulkanPath ${CMAKE_CURRENT_SOURCE_DIR}/1.3.275.0)
 
 #------------------------------------------------------------------------------------------------
 
-add_library(VulkanInclude INTERFACE)
-add_library(VulkanLib INTERFACE)
-
-target_include_directories(VulkanInclude INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/1.3.275.0/include)
-
-target_link_directories(VulkanLib INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/1.3.275.0/lib/win64)
-target_link_libraries(VulkanLib INTERFACE vulkan-1)
+add_library(GLM INTERFACE)
+target_include_directories(GLM INTERFACE ${VulkanPath}/include/glm)
 
 #------------------------------------------------------------------------------------------------
 
 add_library(VulkanMemoryAllocator INTERFACE)
+target_include_directories(VulkanMemoryAllocator INTERFACE ${VulkanPath}/include/vma)
 
-target_include_directories(VulkanMemoryAllocator INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/1.3.275.0/include/vma)
+#------------------------------------------------------------------------------------------------
+
+add_library(Vulkan STATIC IMPORTED GLOBAL)
+
+set_target_properties(Vulkan PROPERTIES
+	INTERFACE_INCLUDE_DIRECTORIES
+		${VulkanPath}/include
+	IMPORTED_LOCATION
+		${VulkanPath}/lib/win64/vulkan-1.lib
+)

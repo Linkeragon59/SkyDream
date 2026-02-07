@@ -48,7 +48,7 @@
  #define UNICODE
 #endif
 
-#ifdef GLFW_PANDA
+#ifdef GLFW_SKYDREAM
 #if WINVER < 0x0602
 #undef WINVER
 #define WINVER 0x0602
@@ -249,7 +249,7 @@ typedef BOOL (WINAPI * PFN_SetProcessDpiAwarenessContext)(HANDLE);
 typedef UINT (WINAPI * PFN_GetDpiForWindow)(HWND);
 typedef BOOL (WINAPI * PFN_AdjustWindowRectExForDpi)(LPRECT,DWORD,BOOL,DWORD,UINT);
 typedef int (WINAPI * PFN_GetSystemMetricsForDpi)(int,UINT);
-#ifdef GLFW_PANDA
+#ifdef GLFW_SKYDREAM
 typedef BOOL(WINAPI* PFN_RegisterTouchWindow)(HWND,ULONG);
 typedef BOOL(WINAPI* PFN_UnregisterTouchWindow)(HWND);
 typedef BOOL(WINAPI* PFN_IsTouchWindow)(HWND,PULONG);
@@ -261,7 +261,7 @@ typedef BOOL(WINAPI* PFN_IsTouchWindow)(HWND,PULONG);
 #define GetDpiForWindow _glfw.win32.user32.GetDpiForWindow_
 #define AdjustWindowRectExForDpi _glfw.win32.user32.AdjustWindowRectExForDpi_
 #define GetSystemMetricsForDpi _glfw.win32.user32.GetSystemMetricsForDpi_
-#ifdef GLFW_PANDA
+#ifdef GLFW_SKYDREAM
 #define RegisterTouchWindow _glfw.win32.user32.RegisterTouchWindow_
 #define UnregisterTouchWindow _glfw.win32.user32.UnregisterTouchWindow_
 #define IsTouchWindow _glfw.win32.user32.IsTouchWindow_
@@ -395,7 +395,7 @@ typedef struct _GLFWlibraryWin32
         PFN_GetDpiForWindow             GetDpiForWindow_;
         PFN_AdjustWindowRectExForDpi    AdjustWindowRectExForDpi_;
         PFN_GetSystemMetricsForDpi      GetSystemMetricsForDpi_;
-#ifdef GLFW_PANDA
+#ifdef GLFW_SKYDREAM
         PFN_RegisterTouchWindow         RegisterTouchWindow_;
         PFN_UnregisterTouchWindow       UnregisterTouchWindow_;
         PFN_IsTouchWindow               IsTouchWindow_;

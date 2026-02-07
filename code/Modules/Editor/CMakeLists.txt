@@ -12,7 +12,6 @@ target_sources(Editor
 )
 
 target_precompile_headers(Editor PRIVATE private/Editor_Precompile.h)
-target_compile_features(Editor PRIVATE cxx_std_23)
 
 target_include_directories(Editor PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/public)
 target_include_directories(Editor PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/private)

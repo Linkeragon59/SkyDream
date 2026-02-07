@@ -304,7 +304,7 @@ void _glfwInputScroll(_GLFWwindow* window, double xoffset, double yoffset)
         window->callbacks.scroll((GLFWwindow*) window, xoffset, yoffset);
 }
 
-#ifdef GLFW_PANDA
+#ifdef GLFW_SKYDREAM
 void _glfwInputTouch(_GLFWwindow* window, uint64_t fingerId, double xpos, double ypos, GLFWbool up)
 {
     if (window->callbacks.touch)
@@ -937,7 +937,7 @@ GLFWAPI GLFWscrollfun glfwSetScrollCallback(GLFWwindow* handle,
     return cbfun;
 }
 
-#ifdef GLFW_PANDA
+#ifdef GLFW_SKYDREAM
 GLFWAPI GLFWtouchfun glfwSetTouchCallback(GLFWwindow* handle,
     GLFWtouchfun cbfun)
 {

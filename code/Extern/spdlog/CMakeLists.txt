@@ -1,10 +1,14 @@
 cmake_minimum_required(VERSION 3.16)
 
-add_library(spdlogInclude INTERFACE)
-add_library(spdlogLib INTERFACE)
+add_library(spdlog STATIC IMPORTED GLOBAL)
 
-target_include_directories(spdlogInclude INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/1.15.2/include)
+set(spdlogPath ${CMAKE_CURRENT_SOURCE_DIR}/1.15.2)
 
-target_link_directories(spdlogLib INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/1.15.2/lib/win64)
-target_link_libraries(spdlogLib INTERFACE debug spdlogd)
-target_link_libraries(spdlogLib INTERFACE optimized spdlog)
+set_target_properties(spdlog PROPERTIES
+	INTERFACE_INCLUDE_DIRECTORIES
+		${spdlogPath}/include
+	IMPORTED_LOCATION_DEBUG
+		${spdlogPath}/lib/win64/spdlogd.lib
+	IMPORTED_LOCATION
+		${spdlogPath}/lib/win64/spdlog.lib
+)

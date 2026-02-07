@@ -11,7 +11,6 @@ target_sources(Asteorhythm
 )
 
 target_precompile_headers(Asteorhythm PRIVATE Precompile.h)
-target_compile_features(Asteorhythm PRIVATE cxx_std_23)
 
 target_include_directories(Asteorhythm PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 

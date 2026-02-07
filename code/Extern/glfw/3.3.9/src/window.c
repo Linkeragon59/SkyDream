@@ -244,7 +244,7 @@ void glfwDefaultWindowHints(void)
     _glfw.hints.window.autoIconify  = GLFW_TRUE;
     _glfw.hints.window.centerCursor = GLFW_TRUE;
     _glfw.hints.window.focusOnShow  = GLFW_TRUE;
-#ifdef GLFW_PANDA
+#ifdef GLFW_SKYDREAM
     _glfw.hints.window.supportsTouch = GLFW_FALSE;
 #endif
 
@@ -356,7 +356,7 @@ GLFWAPI void glfwWindowHint(int hint, int value)
         case GLFW_FOCUS_ON_SHOW:
             _glfw.hints.window.focusOnShow = value ? GLFW_TRUE : GLFW_FALSE;
             return;
-#ifdef GLFW_PANDA
+#ifdef GLFW_SKYDREAM
         case GLFW_SUPPORTS_TOUCH:
             _glfw.hints.window.supportsTouch = value ? GLFW_TRUE : GLFW_FALSE;
             return;
@@ -826,7 +826,7 @@ GLFWAPI int glfwGetWindowAttrib(GLFWwindow* handle, int attrib)
             return _glfwPlatformWindowHovered(window);
         case GLFW_FOCUS_ON_SHOW:
             return window->focusOnShow;
-#ifdef GLFW_PANDA
+#ifdef GLFW_SKYDREAM
         case GLFW_SUPPORTS_TOUCH:
             return _glfwPlatformIsTouchWindow(window);
 #endif
@@ -908,7 +908,7 @@ GLFWAPI void glfwSetWindowAttrib(GLFWwindow* handle, int attrib, int value)
     }
     else if (attrib == GLFW_FOCUS_ON_SHOW)
         window->focusOnShow = value;
-#ifdef GLFW_PANDA
+#ifdef GLFW_SKYDREAM
     else if (attrib == GLFW_SUPPORTS_TOUCH)
     {
         _glfwPlatformRegisterTouchWindow(window, value);

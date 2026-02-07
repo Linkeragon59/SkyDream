@@ -140,8 +140,8 @@ namespace Render
 	
 	void SampleTexturedRectangleRenderer::SetupPipelines()
 	{
-		VkShaderModule vertModule = ShaderHelpers::CreateShaderModule("Frameworks/Shaders/Sample_TexturedRectangle_vert.spv");
-		VkShaderModule fragModule = ShaderHelpers::CreateShaderModule("Frameworks/Shaders/Sample_TexturedRectangle_frag.spv");
+		VkShaderModule vertModule = ShaderHelpers::CreateShaderModule("Modules/Shaders/Sample_TexturedRectangle_vert.spv");
+		VkShaderModule fragModule = ShaderHelpers::CreateShaderModule("Modules/Shaders/Sample_TexturedRectangle_frag.spv");
 	
 		VkPipelineShaderStageCreateInfo vertShaderStageInfo{};
 		vertShaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
@@ -302,7 +302,7 @@ namespace Render
 		indices[4] = 2;
 		indices[5] = 3;
 	
-		std::string texture = "Frameworks/Textures/Panda.jpg";
+		std::string texture = "Modules/Textures/Panda.jpg";
 	
 		myModel = new SimpleGeometryModel(vertices, indices, texture);
 	

@@ -26,8 +26,6 @@ target_sources(ImGui
 		${ImPlotVersion}/implot_items.cpp
 )
 
-target_compile_features(ImGui PRIVATE cxx_std_23)
-
 target_include_directories(ImGui PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/${ImGuiVersion})
 target_include_directories(ImGui PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/${ImPlotVersion})
 target_compile_definitions(ImGui PUBLIC IMGUI_DISABLE_OBSOLETE_FUNCTIONS)

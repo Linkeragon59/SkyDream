@@ -66,8 +66,8 @@ namespace Render
 
 	void SampleTriangleRenderer::SetupPipelines()
 	{
-		VkShaderModule vertModule = ShaderHelpers::CreateShaderModule("Frameworks/Shaders/Sample_Triangle_vert.spv");
-		VkShaderModule fragModule = ShaderHelpers::CreateShaderModule("Frameworks/Shaders/Sample_Triangle_frag.spv");
+		VkShaderModule vertModule = ShaderHelpers::CreateShaderModule("Modules/Shaders/Sample_Triangle_vert.spv");
+		VkShaderModule fragModule = ShaderHelpers::CreateShaderModule("Modules/Shaders/Sample_Triangle_frag.spv");
 	
 		VkPipelineShaderStageCreateInfo vertShaderStageInfo{};
 		vertShaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;

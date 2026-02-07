@@ -269,7 +269,7 @@ struct _GLFWwndconfig
     GLFWbool      maximized;
     GLFWbool      centerCursor;
     GLFWbool      focusOnShow;
-#ifdef GLFW_PANDA
+#ifdef GLFW_SKYDREAM
     GLFWbool      supportsTouch;
 #endif
     GLFWbool      scaleToMonitor;
@@ -416,7 +416,7 @@ struct _GLFWwindow
         GLFWcursorposfun          cursorPos;
         GLFWcursorenterfun        cursorEnter;
         GLFWscrollfun             scroll;
-#ifdef GLFW_PANDA
+#ifdef GLFW_SKYDREAM
         GLFWtouchfun              touch;
 #endif
         GLFWkeyfun                key;
@@ -683,7 +683,7 @@ void _glfwPlatformSetWindowResizable(_GLFWwindow* window, GLFWbool enabled);
 void _glfwPlatformSetWindowDecorated(_GLFWwindow* window, GLFWbool enabled);
 void _glfwPlatformSetWindowFloating(_GLFWwindow* window, GLFWbool enabled);
 void _glfwPlatformSetWindowOpacity(_GLFWwindow* window, float opacity);
-#ifdef GLFW_PANDA
+#ifdef GLFW_SKYDREAM
 void _glfwPlatformRegisterTouchWindow(_GLFWwindow* window, GLFWbool enabled);
 GLFWbool _glfwPlatformIsTouchWindow(_GLFWwindow* window);
 #endif
@@ -734,7 +734,7 @@ void _glfwInputKey(_GLFWwindow* window,
 void _glfwInputChar(_GLFWwindow* window,
                     uint32_t codepoint, int mods, GLFWbool plain);
 void _glfwInputScroll(_GLFWwindow* window, double xoffset, double yoffset);
-#ifdef GLFW_PANDA
+#ifdef GLFW_SKYDREAM
 void _glfwInputTouch(_GLFWwindow* window, uint64_t fingerId, double xpos, double ypos, GLFWbool up);
 #endif
 void _glfwInputMouseClick(_GLFWwindow* window, int button, int action, int mods);

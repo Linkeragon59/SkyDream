@@ -44,7 +44,7 @@ namespace Render
 	{
 		myDescriptorSetLayout = ShaderHelpers::CreateDescriptorSetLayout(ShaderHelpers::BindingType::Gui);
 
-		uint nbGuiMax = 10;
+		uint nbGuiMax = 128;
 
 		std::array<VkDescriptorPoolSize, 1> poolSizes{};
 		poolSizes[0].type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;

@@ -224,7 +224,7 @@ namespace Render
 #endif
 		uint nbObjectsMax = 64;
 		uint nbLightsMax = 16;
-		uint nbGuiMax = 10;
+		uint nbGuiMax = 64;
 
 		std::array<VkDescriptorPoolSize, 4> poolSizes{};
 		poolSizes[0].type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;

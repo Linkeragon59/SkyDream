@@ -5,6 +5,7 @@
 #include "Render_Buffer.h"
 #include "Render_Image.h"
 #include "Render_ShaderHelpers.h"
+#include "Render_TextureParams.h"
 
 namespace Render
 {
@@ -35,7 +36,7 @@ namespace Render
 		void DestroyRenderTarget(RenderTarget* aRenderTarget);
 		const VkDescriptorImageInfo* GetUserRenderTargetTexture(RenderTarget* aRenderTarget) const;
 
-		void LoadUserTexture(const char* aTexturePath, const VkDescriptorImageInfo*& anOutDescriptor, uint& anOutWidth, uint& anOutHeight);
+		void LoadUserTexture(const TextureParams& someParams, const VkDescriptorImageInfo*& anOutDescriptor, uint& anOutWidth, uint& anOutHeight);
 		void UnloadUserTexture(const VkDescriptorImageInfo* aDescriptor);
 
 		void AttachRenderer(RendererType aType, RenderTarget* aRenderTarget);

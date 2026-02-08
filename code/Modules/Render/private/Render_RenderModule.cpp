@@ -70,9 +70,9 @@ namespace Render
 		return (void*)myRenderCore->GetUserRenderTargetTexture(aHandle);
 	}
 
-	void RenderModule::LoadUserTexture(const char* aTexturePath, void*& anOutTextureID, uint& anOutWidth, uint& anOutHeight)
+	void RenderModule::LoadUserTexture(const TextureParams& someParams, void*& anOutTextureID, uint& anOutWidth, uint& anOutHeight)
 	{
-		myRenderCore->LoadUserTexture(aTexturePath, (const VkDescriptorImageInfo*&)anOutTextureID, anOutWidth, anOutHeight);
+		myRenderCore->LoadUserTexture(someParams, (const VkDescriptorImageInfo*&)anOutTextureID, anOutWidth, anOutHeight);
 	}
 
 	void RenderModule::UnloadUserTexture(void* aTextureID)

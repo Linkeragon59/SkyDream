@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core_Module.h"
+#include "Render_TextureParams.h"
 
 struct GLFWwindow;
 
@@ -43,7 +44,7 @@ namespace Render
 		void DestroyRenderTarget(RenderTargetHandle aHandle);
 		void* GetUserRenderTargetTexture(RenderTargetHandle aHandle) const;
 
-		void LoadUserTexture(const char* aTexturePath, void*& anOutTextureID, uint& anOutWidth, uint& anOutHeight);
+		void LoadUserTexture(const TextureParams& someParams, void*& anOutTextureID, uint& anOutWidth, uint& anOutHeight);
 		void UnloadUserTexture(void* aTextureID);
 
 	private:

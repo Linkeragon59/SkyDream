@@ -350,10 +350,10 @@ namespace Render
 		return GetMissingTextureDescriptorInfo();
 	}
 
-	void RenderCore::LoadUserTexture(const char* aTexturePath, const VkDescriptorImageInfo*& anOutDescriptor, uint& anOutWidth, uint& anOutHeight)
+	void RenderCore::LoadUserTexture(const TextureParams& someParams, const VkDescriptorImageInfo*& anOutDescriptor, uint& anOutWidth, uint& anOutHeight)
 	{
 		int texWidth, texHeight, texChannels;
-		stbi_uc* pixels = stbi_load(FileHelpers::RedirectFilePath(aTexturePath).c_str(), &texWidth, &texHeight, &texChannels, STBI_rgb_alpha);
+		stbi_uc* pixels = stbi_load(FileHelpers::RedirectFilePath(someParams.myPath.c_str()).c_str(), &texWidth, &texHeight, &texChannels, STBI_rgb_alpha);
 		Assert(pixels, "Failed to load an image!");
 
 		VkDeviceSize textureSize = static_cast<VkDeviceSize>(texWidth) * static_cast<VkDeviceSize>(texHeight) * 4;
@@ -397,7 +397,7 @@ namespace Render
 			GetGraphicsQueue());
 
 		userTexture->CreateImageView(VK_IMAGE_ASPECT_COLOR_BIT);
-		userTexture->CreateImageSampler();
+		userTexture->CreateImageSampler(someParams.mySamplerRepeat ? VK_SAMPLER_ADDRESS_MODE_REPEAT : VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
 		userTexture->SetupDescriptor();
 
 		myUserTextures.insert(userTexture);

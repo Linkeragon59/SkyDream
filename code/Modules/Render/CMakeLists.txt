@@ -6,6 +6,7 @@ target_sources(Render
 		public/Render_EntityRenderComponent.h
 		public/Render_Fonts.h
 		public/Render_RenderModule.h
+		public/Render_TextureParams.h
 
 		private/Render_Precompile.h
 		private/Render_Precompile.cpp

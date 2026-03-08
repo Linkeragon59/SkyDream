@@ -39,7 +39,7 @@ namespace Render
 	class UserRenderTarget : public RenderTarget
 	{
 	public:
-		UserRenderTarget(uint aWidth, uint aHeight, uint anImagesCount);
+		UserRenderTarget(const RenderTargetParams& someParams, uint anImagesCount);
 		~UserRenderTarget() override;
 		void AttachRenderer(Renderer* aRenderer) override;
 

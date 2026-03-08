@@ -40,7 +40,7 @@ namespace Render
 		void RegisterWindow(GLFWwindow* aWindow, RendererType aType);
 		void UnregisterWindow(GLFWwindow* aWindow);
 
-		RenderTargetHandle CreateRenderTarget(uint aWidth, uint aHeight, RendererType aType);
+		RenderTargetHandle CreateRenderTarget(const RenderTargetParams& someParams, RendererType aType);
 		void DestroyRenderTarget(RenderTargetHandle aHandle);
 		void* GetUserRenderTargetTexture(RenderTargetHandle aHandle) const;
 

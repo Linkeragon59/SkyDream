@@ -18,11 +18,11 @@ namespace Render
 		}
 	}
 
-	UserRenderTarget::UserRenderTarget(uint aWidth, uint aHeight, uint anImagesCount)
+	UserRenderTarget::UserRenderTarget(const RenderTargetParams& someParams, uint anImagesCount)
 		: RenderTarget()
 	{
-		myExtent.width = aWidth;
-		myExtent.height = aHeight;
+		myExtent.width = someParams.myWidth;
+		myExtent.height = someParams.myHeight;
 
 		myColorFormat = VK_FORMAT_R8G8B8A8_UNORM;
 		myFinalLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
@@ -36,7 +36,7 @@ namespace Render
 				VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_SAMPLED_BIT,
 				VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
 			image->CreateImageView(VK_IMAGE_ASPECT_COLOR_BIT);
-			image->CreateImageSampler();
+			image->CreateImageSampler(someParams.mySamplerRepeat ? VK_SAMPLER_ADDRESS_MODE_REPEAT : VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
 			image->SetupDescriptor();
 		}
 	}

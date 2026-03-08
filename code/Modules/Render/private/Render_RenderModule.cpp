@@ -53,9 +53,9 @@ namespace Render
 		myRenderCore->UnregisterWindow(aWindow);
 	}
 
-	RenderTargetHandle RenderModule::CreateRenderTarget(uint aWidth, uint aHeight, RendererType aType)
+	RenderTargetHandle RenderModule::CreateRenderTarget(const RenderTargetParams& someParams, RendererType aType)
 	{
-		RenderTarget* renderTarget = myRenderCore->CreateRenderTarget(aWidth, aHeight);
+		RenderTarget* renderTarget = myRenderCore->CreateRenderTarget(someParams);
 		myRenderCore->AttachRenderer(aType, renderTarget);
 		return RenderTargetHandle(renderTarget);
 	}

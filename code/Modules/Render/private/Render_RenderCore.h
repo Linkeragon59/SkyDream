@@ -32,7 +32,7 @@ namespace Render
 		RenderTarget* RegisterWindow(GLFWwindow* aWindow);
 		void UnregisterWindow(GLFWwindow* aWindow);
 
-		RenderTarget* CreateRenderTarget(uint aWidth, uint aHeight);
+		RenderTarget* CreateRenderTarget(const RenderTargetParams& someParams);
 		void DestroyRenderTarget(RenderTarget* aRenderTarget);
 		const VkDescriptorImageInfo* GetUserRenderTargetTexture(RenderTarget* aRenderTarget) const;
 

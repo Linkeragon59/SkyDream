@@ -313,11 +313,11 @@ namespace Render
 		}
 	}
 
-	RenderTarget* RenderCore::CreateRenderTarget(uint aWidth, uint aHeight)
+	RenderTarget* RenderCore::CreateRenderTarget(const RenderTargetParams& someParams)
 	{
 		// TODO : Not sure we need several images in the User Render Targets
 		// currently this may only be necessary as we recreate frame buffers when starting a frame
-		UserRenderTarget* renderTarget = new UserRenderTarget(aWidth, aHeight, myInFlightFramesCount);
+		UserRenderTarget* renderTarget = new UserRenderTarget(someParams, myInFlightFramesCount);
 		myUserRenderTargets.insert(renderTarget);
 		myActiveRenderTargets.insert(renderTarget);
 		return renderTarget;

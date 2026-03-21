@@ -1,7 +1,6 @@
 #include "Editor_EditorModule.h"
 
-#include <GLFW/glfw3.h>
-
+#include "Core_GLFW.h"
 #include "Core_InputModule.h"
 #include "Core_WindowModule.h"
 

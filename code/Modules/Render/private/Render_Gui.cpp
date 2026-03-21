@@ -6,8 +6,7 @@
 #include "Core_WindowModule.h"
 #include "Core_TimeModule.h"
 #include "Core_FileHelpers.h"
-
-#include "GLFW/glfw3.h"
+#include "Core_GLFW.h"
 #include "stb_image.h"
 
 namespace Render

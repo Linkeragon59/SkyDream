@@ -1,7 +1,6 @@
 #include "Core_InputModule.h"
 #include "Core_WindowModule.h"
-
-#include "GLFW/glfw3.h"
+#include "Core_GLFW.h"
 
 namespace Input
 {

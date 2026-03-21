@@ -4,8 +4,7 @@
 #include "Render_Renderer.h"
 
 #include "Core_WindowModule.h"
-
-#include "GLFW/glfw3.h"
+#include "Core_GLFW.h"
 
 namespace Render
 {

@@ -18,8 +18,7 @@
 #include "Core_EntityTransformComponent.h"
 #include "Render_EntityRenderComponent.h"
 
-#include "GLFW/glfw3.h"
-
+#include "Core_GLFW.h"
 #include "Core_WindowModule.h"
 #include "Core_FileHelpers.h"
 #include "imgui.h"

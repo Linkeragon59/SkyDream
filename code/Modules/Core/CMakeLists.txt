@@ -12,6 +12,7 @@ target_sources(Core
 		public/Core_EntityTransformComponent.h
 		public/Core_Facade.h
 		public/Core_FileHelpers.h
+		public/Core_GLFW.h
 		public/Core_glm.h
 		public/Core_InputModule.h
 		public/Core_Log.h

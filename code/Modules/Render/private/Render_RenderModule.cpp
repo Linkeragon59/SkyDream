@@ -2,7 +2,7 @@
 
 #include "Render_Renderer.h"
 
-#include "GLFW/glfw3.h"
+#include "Core_GLFW.h"
 
 namespace Render
 {

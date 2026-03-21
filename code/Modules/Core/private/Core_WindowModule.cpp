@@ -1,6 +1,7 @@
 #include "Core_WindowModule.h"
 #include "Core_InputModule.h"
 #include "Core_TimeModule.h"
+#include "Core_GLFW.h"
 
 #define FULL_SCREEN_WORKAROUND DEBUG_BUILD && 0
 
@@ -10,8 +11,6 @@
 #undef max
 #undef min
 #endif
-
-#include "GLFW/glfw3.h"
 
 namespace Core
 {

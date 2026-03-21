@@ -11,14 +11,14 @@ namespace Input
 
 	void locInitGlfwMapping()
 	{
-		std::memset(&locMouseButtonToGlfwMapping, GLFW_MOUSE_BUTTON_1, MouseCount);
+		std::memset(&locMouseButtonToGlfwMapping, GLFW_MOUSE_BUTTON_1, MouseCount * sizeof(int));
 		locMouseButtonToGlfwMapping[MouseLeft] = GLFW_MOUSE_BUTTON_LEFT;
 		locMouseButtonToGlfwMapping[MouseRight] = GLFW_MOUSE_BUTTON_RIGHT;
 		locMouseButtonToGlfwMapping[MouseMiddle] = GLFW_MOUSE_BUTTON_MIDDLE;
 		for (uint i = 0; i < MouseCount; ++i)
 			locGlfwToMouseButtonMapping[locMouseButtonToGlfwMapping[i]] = MouseButton(i);
 
-		std::memset(&locKeyToGlfwMapping, GLFW_KEY_LAST, KeyCount);
+		std::memset(&locKeyToGlfwMapping, GLFW_KEY_LAST, KeyCount * sizeof(int));
 		locKeyToGlfwMapping[Key0] = GLFW_KEY_0;
 		locKeyToGlfwMapping[Key1] = GLFW_KEY_1;
 		locKeyToGlfwMapping[Key2] = GLFW_KEY_2;

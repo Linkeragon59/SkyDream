@@ -26,3 +26,11 @@ typedef uint64_t uint64;
 #else
 #define DEBUG_BUILD 1
 #endif
+
+#if defined(_WINDOWS)
+#define WINDOWS_BUILD 1
+#define LINUX_BUILD 0
+#elif defined(__linux__)
+#define WINDOWS_BUILD 0
+#define LINUX_BUILD 1
+#endif

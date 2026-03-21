@@ -1,6 +1,10 @@
 #include "Core_Thread.h"
 
+#if WINDOWS_BUILD
 #include <windows.h>
+#elif LINUX_BUILD
+// TODO : Linux
+#endif
 
 namespace Thread
 {
@@ -30,6 +34,7 @@ namespace Thread
 	{
 		myWorkerThread = std::thread(&Worker::RunJobs, this);
 
+#if WINDOWS_BUILD
 		int priority = THREAD_PRIORITY_NORMAL;
 		switch (myPool->myWorkersPriority)
 		{
@@ -52,6 +57,9 @@ namespace Thread
 			workerName += std::to_wstring(myPool->myWorkers.size());
 			SetThreadDescription(myWorkerThread.native_handle(), workerName.c_str());
 		}
+#endif
+#elif LINUX_BUILD
+		// TODO : Linux
 #endif
 	}
 
@@ -220,6 +228,7 @@ namespace Thread
 		mySleepIntervalMs = aSleepIntervalMs;
 		myThread = std::thread(&WorkerThread::Run, this);
 
+#if WINDOWS_BUILD
 		int priority = THREAD_PRIORITY_NORMAL;
 		switch (aPriority)
 		{
@@ -240,6 +249,10 @@ namespace Thread
 			std::wstring name = std::wstring(myThreadName.begin(), myThreadName.end());
 			SetThreadDescription(myThread.native_handle(), name.c_str());
 		}
+#endif
+#elif LINUX_BUILD
+		// TODO : Linux
+		(void)aPriority;
 #endif
 	}
 

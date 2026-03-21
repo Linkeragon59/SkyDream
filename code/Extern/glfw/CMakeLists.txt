@@ -51,10 +51,13 @@ elseif (CMAKE_SYSTEM_NAME MATCHES "Linux")
 			3.3.9/src/window.c
 			3.3.9/src/x11_init.c
 			3.3.9/src/x11_monitor.c
+			3.3.9/src/linux_joystick.c
 			3.3.9/src/posix_time.c
 			3.3.9/src/posix_thread.c
 			3.3.9/src/x11_window.c
 			3.3.9/src/egl_context.c
+			3.3.9/src/glx_context.c
+			3.3.9/src/xkb_unicode.c
 			3.3.9/src/osmesa_context.c
 	)
 endif()
@@ -70,4 +73,8 @@ endif()
 target_include_directories(GLFW PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/3.3.9/include)
 if (CMAKE_SYSTEM_NAME MATCHES "Windows") # TODO : Linux
 	target_compile_definitions(GLFW PUBLIC GLFW_SKYDREAM)
+endif()
+
+if (CMAKE_SYSTEM_NAME MATCHES "Linux")
+	target_link_libraries(GLFW INTERFACE dl X11)
 endif()

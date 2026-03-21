@@ -16,9 +16,18 @@ target_include_directories(VulkanMemoryAllocator INTERFACE ${VulkanPath}/include
 
 add_library(Vulkan STATIC IMPORTED GLOBAL)
 
-set_target_properties(Vulkan PROPERTIES
-	INTERFACE_INCLUDE_DIRECTORIES
-		${VulkanPath}/include
-	IMPORTED_LOCATION
-		${VulkanPath}/lib/win64/vulkan-1.lib
-)
+if (CMAKE_SYSTEM_NAME MATCHES "Windows")
+	set_target_properties(Vulkan PROPERTIES
+		INTERFACE_INCLUDE_DIRECTORIES
+			${VulkanPath}/include
+		IMPORTED_LOCATION
+			${VulkanPath}/lib/win64/vulkan-1.lib
+	)
+elseif (CMAKE_SYSTEM_NAME MATCHES "Linux")
+	set_target_properties(Vulkan PROPERTIES
+		INTERFACE_INCLUDE_DIRECTORIES
+			${VulkanPath}/include
+		IMPORTED_LOCATION
+			${VulkanPath}/lib/linux/libvulkan.so
+	)
+endif ()

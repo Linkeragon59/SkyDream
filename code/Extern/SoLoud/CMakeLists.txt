@@ -83,7 +83,7 @@ target_sources(SoLoud
 		20200207/src/core/soloud_thread.cpp
 )
 
-if ( CMAKE_SYSTEM_NAME MATCHES "Windows" )
+if (CMAKE_SYSTEM_NAME MATCHES "Windows")
 	target_compile_options(SoLoud PRIVATE
 		/wd"4100"
 		/wd"4244"
@@ -94,7 +94,7 @@ if ( CMAKE_SYSTEM_NAME MATCHES "Windows" )
 		/wd"4996"
 	)
 	target_compile_definitions(SoLoud PRIVATE WITH_MINIAUDIO)
-elseif ( CMAKE_SYSTEM_NAME MATCHES "Linux" )
+elseif (CMAKE_SYSTEM_NAME MATCHES "Linux")
 	target_compile_options(SoLoud PRIVATE
 		-Wno-pedantic
 		-Wno-unused-parameter

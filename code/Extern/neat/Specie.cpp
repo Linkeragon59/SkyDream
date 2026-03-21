@@ -3,6 +3,9 @@
 #include "EvolutionParams.h"
 #include "Genome.h"
 
+#include <algorithm>
+#include <float.h>
+
 namespace Neat {
 
 bool Specie::BelongsToSpecie(const Genome* aGenome) const

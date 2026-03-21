@@ -3,6 +3,7 @@
 #include "EvolutionParams.h"
 
 #include <algorithm>
+#include <float.h>
 
 namespace Neat {
 

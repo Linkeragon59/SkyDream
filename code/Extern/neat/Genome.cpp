@@ -7,6 +7,7 @@
 #include <sstream>
 #include <string>
 #include <cassert>
+#include <algorithm>
 
 namespace Neat {
 

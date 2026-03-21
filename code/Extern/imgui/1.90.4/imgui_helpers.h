@@ -31,7 +31,7 @@ namespace ImVec2Util
 {
     static inline ImVec2 Clamp(const ImVec2& aVec, const ImVec2& aMinVec, const ImVec2& aMaxVec) { return ImVec2(std::clamp(aVec.x, aMinVec.x, aMaxVec.x), std::clamp(aVec.y, aMinVec.y, aMaxVec.y)); }
     static inline float SquareLength(const ImVec2& aVec) { return aVec.x * aVec.x + aVec.y * aVec.y; }
-    static inline float Length(const ImVec2& aVec) { return std::sqrtf(SquareLength(aVec)); }
+    static inline float Length(const ImVec2& aVec) { return std::sqrt(SquareLength(aVec)); }
     static inline ImVec2 Normalize(const ImVec2& aVec) { return aVec / Length(aVec); }
 }
 

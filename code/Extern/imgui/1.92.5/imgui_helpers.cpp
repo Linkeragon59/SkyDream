@@ -1,5 +1,3 @@
-#pragma once
-
 #ifdef IMGUI_SKYDREAM
 
 #include "imgui_helpers.h"

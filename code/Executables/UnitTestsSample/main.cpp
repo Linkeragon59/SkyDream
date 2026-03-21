@@ -8,7 +8,7 @@ TEST(HelloTest, BasicAssertions) {
 	EXPECT_EQ(7 * 6, 42);
 }
 
-int main(int argc, char** argv)
+int main(int argc, char* argv[])
 {
 	testing::InitGoogleTest(&argc, argv);
 	int unitTestsRes = testing::UnitTest::GetInstance()->Run();

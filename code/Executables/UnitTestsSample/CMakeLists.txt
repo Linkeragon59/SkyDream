@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 4.0)
 
 add_executable(UnitTestsSample)
 
@@ -12,4 +12,4 @@ target_include_directories(UnitTestsSample PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 
 target_link_libraries(UnitTestsSample PRIVATE GoogleTest)
 
-set_property(TARGET UnitTestsSample PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/data")
+set_property(TARGET UnitTestsSample PROPERTY DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/data")

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 4.0)
 
 set(ImGuiVersion "1.92.5")
 set(ImPlotVersion "implot-0.17")

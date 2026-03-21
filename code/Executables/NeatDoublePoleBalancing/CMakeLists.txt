@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 4.0)
 
 add_executable(NeatDoublePoleBalancing)
 
@@ -19,4 +19,4 @@ target_link_libraries(NeatDoublePoleBalancing PRIVATE Render)
 target_link_libraries(NeatDoublePoleBalancing PRIVATE ImGui)
 target_link_libraries(NeatDoublePoleBalancing PRIVATE NEAT)
 
-set_property(TARGET NeatDoublePoleBalancing PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/data")
+set_property(TARGET NeatDoublePoleBalancing PROPERTY DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/data")

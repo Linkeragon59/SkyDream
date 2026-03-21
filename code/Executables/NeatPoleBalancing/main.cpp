@@ -467,13 +467,13 @@ void TrainNeat(bool aBalancingTraining)
 	}
 }
 
-int main()
+int main(int argc, char* argv[])
 {
 	InitMemoryLeaksDetection();
 
 	Core::Facade::CreateParams params;
-	params.myArgc = __argc;
-	params.myArgv = __argv;
+	params.myArgc = argc;
+	params.myArgv = argv;
 	Core::Facade::Create(params);
 
 	std::random_device rd;

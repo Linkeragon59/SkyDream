@@ -23,7 +23,7 @@ namespace Core
 
 		Module() = default;
 		virtual ~Module() = default;
-		const bool operator==(const Module* anOther) { return strcmp(GetIdInternal(), anOther->GetIdInternal()) == 0; }
+		bool operator==(const Module* anOther) const { return strcmp(GetIdInternal(), anOther->GetIdInternal()) == 0; }
 
 		virtual void OnRegister() {}
 		virtual void OnUnregister() {}

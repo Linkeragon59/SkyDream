@@ -21,12 +21,12 @@ namespace Render
 			return;
 		locImGuiMappingInitialized = true;
 
-		std::memset(&locImGuiMouseMapping, ImGuiMouseButton_Left, Input::MouseCount);
+		std::memset(&locImGuiMouseMapping, ImGuiMouseButton_Left, Input::MouseCount * sizeof(int));
 		locImGuiMouseMapping[Input::MouseLeft] = ImGuiMouseButton_Left;
 		locImGuiMouseMapping[Input::MouseRight] = ImGuiMouseButton_Right;
 		locImGuiMouseMapping[Input::MouseMiddle] = ImGuiMouseButton_Middle;
 
-		std::memset(&locImGuiKeyMapping, ImGuiKey_None, Input::KeyCount);
+		std::memset(&locImGuiKeyMapping, ImGuiKey_None, Input::KeyCount * sizeof(ImGuiKey));
 		locImGuiKeyMapping[Input::Key0] = ImGuiKey_0;
 		locImGuiKeyMapping[Input::Key1] = ImGuiKey_1;
 		locImGuiKeyMapping[Input::Key2] = ImGuiKey_2;

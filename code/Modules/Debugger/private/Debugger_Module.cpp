@@ -152,7 +152,7 @@ namespace Debugger
 					{
 						bool isFakeTouch = myFakeTouchIds.find(touch.first) != myFakeTouchIds.end();
 						std::string format = std::format("\tID:{}{}, x:{:.0f}, y:{:.0f}", isFakeTouch ? "FAKE_" : "", isFakeTouch ? UINT64_MAX - touch.first : touch.first, touch.second.first, touch.second.second);
-						ImGui::Text(format.c_str());
+						ImGui::TextUnformatted(format.c_str());
 						if (isFakeTouch)
 						{
 							ImGui::PushID(static_cast<int>(UINT64_MAX - touch.first));

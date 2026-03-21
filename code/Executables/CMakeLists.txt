@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 4.0)
 
 add_subdirectory(Asteorhythm)
 set_target_properties(Asteorhythm PROPERTIES FOLDER "Executables")

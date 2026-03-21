@@ -1,7 +1,7 @@
 @echo off
 
 set CODE_PATH=%~dp0..\code
-set GLSLC_EXE=%CODE_PATH%\Extern\VulkanSDK\1.3.275.0\bin\win64\glslc.exe
+set GLSLC_EXE=%CODE_PATH%\Extern\VulkanSDK\1.4.341.1\bin\win64\glslc.exe
 
 set DATA_PATH=%~dp0..\data
 set SHADERS_PATH=%DATA_PATH%\Modules\Shaders

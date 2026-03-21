@@ -1,10 +1,10 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 4.0)
 
 # Pre-built or include only
 
 add_subdirectory(GoogleTest)
 add_subdirectory(fmt)
-add_subdirectory(onnxruntime)
+#add_subdirectory(onnxruntime)
 add_subdirectory(rapidjson)
 add_subdirectory(spdlog)
 add_subdirectory(tinygltf)

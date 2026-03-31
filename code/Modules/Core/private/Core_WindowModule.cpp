@@ -150,7 +150,7 @@ namespace Core
 			ShowWindow(hShellWnd, SW_HIDE);
 		}
 #else
-		int width, height;
+		int width = 0, height = 0;
 		WindowModule_Priv::GetMonitorSize(aMonitor, &width, &height);
 		glfwSetWindowMonitor(aWindow, aMonitor,
 			it->second.myPosX, it->second.myPosY, width, height, GLFW_DONT_CARE);
@@ -437,7 +437,7 @@ namespace Core
 
 			for (int i = 0; i < monitorCount; ++i)
 			{
-				int monitorL, monitorT, monitorR, monitorB;
+				int monitorL = 0, monitorT = 0, monitorR = 0, monitorB = 0;
 				glfwGetMonitorPos(monitors[i], &monitorL, &monitorT);
 				WindowModule_Priv::GetMonitorSize(monitors[i], &monitorR, &monitorB);
 				monitorR += monitorL;

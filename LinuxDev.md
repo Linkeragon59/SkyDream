@@ -12,4 +12,6 @@ Linux Dev:
 	- sudo apt install libxrandr-dev
 	- sudo apt install libxinerama-dev
 	- sudo apt install libxi-dev
+- Touchscreen : magic-touchscreen
+    - sudo apt install libevdev-dev
 

@@ -76,5 +76,5 @@ if (CMAKE_SYSTEM_NAME MATCHES "Windows") # TODO : Linux
 endif()
 
 if (CMAKE_SYSTEM_NAME MATCHES "Linux")
-	target_link_libraries(GLFW INTERFACE dl X11)
+	target_link_libraries(GLFW INTERFACE dl X11 Xi)
 endif()

@@ -23,3 +23,8 @@ set_target_properties(NeatXOR PROPERTIES FOLDER "Executables")
 
 add_subdirectory(UnitTestsSample)
 set_target_properties(UnitTestsSample PROPERTIES FOLDER "Executables")
+
+if (CMAKE_SYSTEM_NAME MATCHES "Linux")
+	add_subdirectory(TouchInputLinuxTest)
+	set_target_properties(TouchInputLinuxTest PROPERTIES FOLDER "Executables")
+endif ()

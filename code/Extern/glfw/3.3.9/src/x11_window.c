@@ -1347,11 +1347,11 @@ static void processEvent(XEvent *event)
                     event->xcookie.evtype == XI_TouchUpdate
                 )
                 {
+                    XIDeviceEvent* dev = event->xcookie.data;
                     _GLFWwindow* window = NULL;
-                    XFindContext(_glfw.x11.display, event->xany.window, _glfw.x11.context, (XPointer*) &window);
+                    XFindContext(_glfw.x11.display, dev->event, _glfw.x11.context, (XPointer*)&window);
                     if (window)
                     {
-                        XIDeviceEvent* dev = event->xcookie.data;
                         _glfwInputTouch(window, dev->detail, dev->event_x, dev->event_y, event->xcookie.evtype == XI_TouchEnd);
                     }
                 }

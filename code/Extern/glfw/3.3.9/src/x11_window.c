@@ -544,6 +544,89 @@ static void releaseCursor(void)
     XUngrabPointer(_glfw.x11.display, CurrentTime);
 }
 
+#ifdef GLFW_SKYDREAM
+static void enableRawMouseMotion(_GLFWwindow* window)
+{
+    int mask_count = 0;
+    XIEventMask* em_prev = XIGetSelectedEvents(_glfw.x11.display, _glfw.x11.root, &mask_count);
+    if (em_prev)
+    {
+        XISetMask(em_prev->mask, XI_RawMotion);
+        XISelectEvents(_glfw.x11.display, _glfw.x11.root, em_prev, 1);
+        XFree(em_prev);
+    }
+    else
+    {
+        unsigned char mask[XIMaskLen(XI_LASTEVENT)] = { 0 };
+        XISetMask(mask, XI_RawMotion);
+        XIEventMask em;
+        em.deviceid = XIAllMasterDevices;
+        em.mask_len = sizeof(mask);
+        em.mask = mask;
+        XISelectEvents(_glfw.x11.display, _glfw.x11.root, &em, 1);
+    }
+}
+
+static void disableRawMouseMotion(_GLFWwindow* window)
+{
+    int mask_count = 0;
+    XIEventMask* em_prev = XIGetSelectedEvents(_glfw.x11.display, _glfw.x11.root, &mask_count);
+    if (em_prev)
+    {
+        XIClearMask(em_prev->mask, XI_RawMotion);
+        XISelectEvents(_glfw.x11.display, _glfw.x11.root, em_prev, 1);
+        XFree(em_prev);
+    }
+}
+
+static void enableTouch(_GLFWwindow* window)
+{
+    if (!_glfw.x11.xi.available)
+        return;
+
+    int mask_count = 0;
+    XIEventMask* em_prev = XIGetSelectedEvents(_glfw.x11.display, window->x11.handle, &mask_count);
+    if (em_prev)
+    {
+        XISetMask(em_prev->mask, XI_TouchBegin);
+        XISetMask(em_prev->mask, XI_TouchUpdate);
+        XISetMask(em_prev->mask, XI_TouchEnd);
+        XISelectEvents(_glfw.x11.display, window->x11.handle, em_prev, 1);
+        XFree(em_prev);
+    }
+    else
+    {
+        unsigned char mask[XIMaskLen(XI_LASTEVENT)] = { 0 };
+        XISetMask(mask, XI_TouchBegin);
+        XISetMask(mask, XI_TouchUpdate);
+        XISetMask(mask, XI_TouchEnd);
+        XIEventMask em;
+        em.deviceid = XIAllMasterDevices;
+        em.mask_len = sizeof(mask);
+        em.mask = mask;
+        XISelectEvents(_glfw.x11.display, window->x11.handle, &em, 1);
+    }
+    window->x11.touchEnabled = GLFW_TRUE;
+}
+
+static void disableTouch(_GLFWwindow* window)
+{
+    if (!_glfw.x11.xi.available)
+        return;
+
+    int mask_count = 0;
+    XIEventMask* em_prev = XIGetSelectedEvents(_glfw.x11.display, window->x11.handle, &mask_count);
+    if (em_prev)
+    {
+        XIClearMask(em_prev->mask, XI_TouchBegin);
+        XIClearMask(em_prev->mask, XI_TouchUpdate);
+        XIClearMask(em_prev->mask, XI_TouchEnd);
+        XISelectEvents(_glfw.x11.display, window->x11.handle, em_prev, 1);
+        XFree(em_prev);
+    }
+    window->x11.touchEnabled = GLFW_FALSE;
+}
+#else
 // Enable XI2 raw mouse motion events
 //
 static void enableRawMouseMotion(_GLFWwindow* window)
@@ -572,6 +655,7 @@ static void disableRawMouseMotion(_GLFWwindow* window)
 
     XISelectEvents(_glfw.x11.display, _glfw.x11.root, &em, 1);
 }
+#endif
 
 // Apply disabled cursor mode to a focused window
 //
@@ -1228,6 +1312,51 @@ static void processEvent(XEvent *event)
     {
         if (_glfw.x11.xi.available)
         {
+#ifdef GLFW_SKYDREAM
+            if (event->xcookie.extension == _glfw.x11.xi.majorOpcode &&
+                XGetEventData(_glfw.x11.display, &event->xcookie))
+            {
+                if (event->xcookie.evtype == XI_RawMotion)
+                {
+                    _GLFWwindow* window = _glfw.x11.disabledCursorWindow;
+                    if (window && window->rawMouseMotion)
+                    {
+                        XIRawEvent* re = event->xcookie.data;
+                        if (re->valuators.mask_len)
+                        {
+                            const double* values = re->raw_values;
+                            double xpos = window->virtualCursorPosX;
+                            double ypos = window->virtualCursorPosY;
+
+                            if (XIMaskIsSet(re->valuators.mask, 0))
+                            {
+                                xpos += *values;
+                                values++;
+                            }
+
+                            if (XIMaskIsSet(re->valuators.mask, 1))
+                                ypos += *values;
+
+                            _glfwInputCursorPos(window, xpos, ypos);
+                        }
+                    }
+                }
+                else if (
+                    event->xcookie.evtype == XI_TouchBegin ||
+                    event->xcookie.evtype == XI_TouchEnd ||
+                    event->xcookie.evtype == XI_TouchUpdate
+                )
+                {
+                    _GLFWwindow* window = NULL;
+                    XFindContext(_glfw.x11.display, event->xany.window, _glfw.x11.context, (XPointer*) &window);
+                    if (window)
+                    {
+                        XIDeviceEvent* dev = event->xcookie.data;
+                        _glfwInputTouch(window, dev->detail, dev->event_x, dev->event_y, event->xcookie.evtype == XI_TouchEnd);
+                    }
+                }
+            }
+#else
             _GLFWwindow* window = _glfw.x11.disabledCursorWindow;
 
             if (window &&
@@ -1255,6 +1384,7 @@ static void processEvent(XEvent *event)
                     _glfwInputCursorPos(window, xpos, ypos);
                 }
             }
+#endif
 
             XFreeEventData(_glfw.x11.display, &event->xcookie);
         }
@@ -2074,6 +2204,12 @@ int _glfwPlatformCreateWindow(_GLFWwindow* window,
         }
     }
 
+#ifdef GLFW_SKYDREAM
+    window->x11.touchEnabled = GLFW_FALSE;
+    if (wndconfig->supportsTouch)
+        enableTouch(window);
+#endif
+
     XFlush(_glfw.x11.display);
     return GLFW_TRUE;
 }
@@ -2806,6 +2942,21 @@ GLFWbool _glfwPlatformRawMouseMotionSupported(void)
 {
     return _glfw.x11.xi.available;
 }
+
+#ifdef GLFW_SKYDREAM
+void _glfwPlatformRegisterTouchWindow(_GLFWwindow* window, GLFWbool enabled)
+{
+    if (enabled)
+        enableTouch(window);
+    else
+        disableTouch(window);
+}
+
+GLFWbool _glfwPlatformIsTouchWindow(_GLFWwindow* window)
+{
+    return window->x11.touchEnabled;
+}
+#endif
 
 void _glfwPlatformPollEvents(void)
 {

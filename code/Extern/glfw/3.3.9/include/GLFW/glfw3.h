@@ -4827,7 +4827,7 @@ GLFWAPI GLFWcursorenterfun glfwSetCursorEnterCallback(GLFWwindow* window, GLFWcu
 GLFWAPI GLFWscrollfun glfwSetScrollCallback(GLFWwindow* window, GLFWscrollfun callback);
 
 #ifdef GLFW_SKYDREAM
-GLFWAPI GLFWscrollfun glfwSetTouchCallback(GLFWwindow* window, GLFWtouchfun callback);
+GLFWAPI GLFWtouchfun glfwSetTouchCallback(GLFWwindow* window, GLFWtouchfun callback);
 #endif
 
 /*! @brief Sets the path drop callback.

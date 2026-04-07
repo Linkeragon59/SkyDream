@@ -33,8 +33,14 @@ void setupXInput2(Display* dpy, Window win) {
 		return;
 	}
 
+	{
+		int numMask = 0;
+		XIEventMask* prevMask = XIGetSelectedEvents(dpy, win, &numMask);
+		XFree(prevMask);
+	}
+
 	XIEventMask mask;
-	unsigned char mask_data[(XI_LASTEVENT + 7) / 8] = {};
+	unsigned char mask_data[XIMaskLen(XI_LASTEVENT)] = {};
 
 	mask.deviceid = XIAllMasterDevices;
 	mask.mask_len = sizeof(mask_data);
@@ -46,6 +52,12 @@ void setupXInput2(Display* dpy, Window win) {
 
 	XISelectEvents(dpy, win, &mask, 1);
 	XFlush(dpy);
+
+	{
+		int numMask = 0;
+		XIEventMask* prevMask = XIGetSelectedEvents(dpy, win, &numMask);
+		XFree(prevMask);
+	}
 
 	std::cout << "XInput2 multitouch enabled\n";
 }

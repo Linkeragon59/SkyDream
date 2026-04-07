@@ -607,6 +607,10 @@ static GLFWbool initExtensions(void)
             _glfw_dlsym(_glfw.x11.xi.handle, "XIQueryVersion");
         _glfw.x11.xi.SelectEvents = (PFN_XISelectEvents)
             _glfw_dlsym(_glfw.x11.xi.handle, "XISelectEvents");
+#ifdef GLFW_SKYDREAM
+        _glfw.x11.xi.GetSelectedEvents = (PFN_XIGetSelectedEvents)
+            _glfw_dlsym(_glfw.x11.xi.handle, "XIGetSelectedEvents");
+#endif
 
         if (XQueryExtension(_glfw.x11.display,
                             "XInputExtension",

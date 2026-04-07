@@ -113,8 +113,14 @@ typedef Bool (* PFN_XF86VidModeGetGammaRampSize)(Display*,int,int*);
 
 typedef Status (* PFN_XIQueryVersion)(Display*,int*,int*);
 typedef int (* PFN_XISelectEvents)(Display*,Window,XIEventMask*,int);
+#ifdef GLFW_SKYDREAM
+typedef XIEventMask* (* PFN_XIGetSelectedEvents)(Display*,Window,int*);
+#endif
 #define XIQueryVersion _glfw.x11.xi.QueryVersion
 #define XISelectEvents _glfw.x11.xi.SelectEvents
+#ifdef GLFW_SKYDREAM
+#define XIGetSelectedEvents _glfw.x11.xi.GetSelectedEvents
+#endif
 
 typedef Bool (* PFN_XRenderQueryExtension)(Display*,int*,int*);
 typedef Status (* PFN_XRenderQueryVersion)(Display*dpy,int*,int*);
@@ -186,6 +192,9 @@ typedef struct _GLFWwindowX11
     GLFWbool        overrideRedirect;
     GLFWbool        iconified;
     GLFWbool        maximized;
+#ifdef GLFW_SKYDREAM
+    GLFWbool        touchEnabled;
+#endif
 
     // Whether the visual supports framebuffer transparency
     GLFWbool        transparent;
@@ -394,6 +403,9 @@ typedef struct _GLFWlibraryX11
         int         minor;
         PFN_XIQueryVersion QueryVersion;
         PFN_XISelectEvents SelectEvents;
+#ifdef GLFW_SKYDREAM
+        PFN_XIGetSelectedEvents GetSelectedEvents;
+#endif
     } xi;
 
     struct {

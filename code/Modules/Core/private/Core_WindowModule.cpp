@@ -64,13 +64,8 @@ namespace Core
 		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 		glfwWindowHint(GLFW_AUTO_ICONIFY, GLFW_FALSE);
 		glfwWindowHint(GLFW_SCALE_TO_MONITOR, GLFW_TRUE);
-
-#if WINDOWS_BUILD
 		if (someParams.mySupportsTouch)
 			glfwWindowHint(GLFW_SUPPORTS_TOUCH, GLFW_TRUE);
-#elif LINUX_BUILD
-		// TODO : Linux
-#endif
 
 		int width = someParams.myWidth, height = someParams.myHeight;
 		GLFWmonitor* monitor = nullptr;
@@ -469,11 +464,7 @@ namespace Core
 
 		glfwSetMouseButtonCallback(aWindow, InputModule::OnMouseCallback);
 		glfwSetCursorPosCallback(aWindow, InputModule::OnCursorCallback);
-#if WINDOWS_BUILD
 		glfwSetTouchCallback(aWindow, InputModule::OnTouchCallback);
-#elif LINUX_BUILD
-		// TODO : Linux
-#endif
 		glfwSetKeyCallback(aWindow, InputModule::OnKeyCallback);
 		glfwSetScrollCallback(aWindow, InputModule::OnScrollCallback);
 		glfwSetCharCallback(aWindow, InputModule::OnCharacterCallback);
@@ -505,11 +496,7 @@ namespace Core
 
 		glfwSetMouseButtonCallback(aWindow, nullptr);
 		glfwSetCursorPosCallback(aWindow, nullptr);
-#if WINDOWS_BUILD
 		glfwSetTouchCallback(aWindow, nullptr);
-#elif LINUX_BUILD
-		// TODO : Linux
-#endif
 		glfwSetKeyCallback(aWindow, nullptr);
 		glfwSetScrollCallback(aWindow, nullptr);
 		glfwSetCharCallback(aWindow, nullptr);

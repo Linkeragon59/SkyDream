@@ -71,9 +71,7 @@ elseif (CMAKE_SYSTEM_NAME MATCHES "Linux")
 endif()
 
 target_include_directories(GLFW PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/3.3.9/include)
-if (CMAKE_SYSTEM_NAME MATCHES "Windows") # TODO : Linux
-	target_compile_definitions(GLFW PUBLIC GLFW_SKYDREAM)
-endif()
+target_compile_definitions(GLFW PUBLIC GLFW_SKYDREAM)
 
 if (CMAKE_SYSTEM_NAME MATCHES "Linux")
 	target_link_libraries(GLFW INTERFACE dl X11 Xi)

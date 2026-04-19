@@ -8,6 +8,11 @@
 #include "Core_EntityModule.h"
 #include "Core_GLFW.h"
 
+#if LINUX_BUILD
+#include <chrono>
+#include <thread>
+#endif
+
 namespace Core
 {
 	Facade* Facade::ourInstance = nullptr;
@@ -33,10 +38,24 @@ namespace Core
 		myMainWindow = aWindow;
 		while (!glfwWindowShouldClose(myMainWindow) && !myShouldQuit)
 		{
+#if LINUX_BUILD
+			using clock = std::chrono::steady_clock;
+			using frames = std::chrono::duration<int, std::ratio<1, 30>>;
+			auto start = clock::now();
+#endif
+
 			glfwPollEvents();
 
 			if (!Update())
 				break;
+
+#if LINUX_BUILD
+			auto finish = clock::now();
+			if (finish - start < frames(1))
+			{
+				std::this_thread::sleep_until(start + frames(1));
+			}
+#endif
 		}
 		myMainWindow = nullptr;
 	}
